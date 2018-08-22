@@ -1,0 +1,76 @@
+{% if  mis_eventos.count > 0 %}
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Mis Eventos</h4>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr class="table-primary">
+              <th>Fecha Creación</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Lugar</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Fin</th>
+              <th>Tipo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+
+          <tbody>
+
+          {% for  evento in mis_eventos %}
+            <tr>
+              <td>{{evento.created_at}}</td>
+              <td>{{evento.nombre}}</td>
+              <td>{{evento.categoria}}</td>
+              <td>{{evento.lugar}}</td>
+              <td>{{evento.fec_inicio}}</td>
+              <td>{{evento.fec_fin}}</td>
+              <td>{{evento.tipo_evento}}</td>
+              <td>
+                <form>
+                  <input type="text" name="id_evento" value="{{ evento.id }}" hidden>
+                  <a href="#" data-toggle="tooltip" data-placement="top" title="Ver Evento">
+                    <button type="button" class="btn btn-icons btn-inverse-info search_event" id="{{ evento.id }}1" data-event="1" id-event={{ evento.id }} data-toggle="modal" data-target="#viewModal">
+                      <i class="mdi mdi-calendar-range"></i>
+                    </button>
+                  </a>
+                  <a href="#" data-toggle="tooltip" data-placement="top" title="Editar Evento">
+                    <button type="button" class="btn btn-icons btn-inverse-warning search_event" id="{{ evento.id }}2*123" data-event="2" id-event={{ evento.id }} data-toggle="modal" data-target="#editModal">
+                      <i class="mdi mdi-pencil"></i>
+                    </button>
+                  </a>
+                  <a href="#" data-toggle="tooltip" data-placement="top" title="Eliminar Evento">
+                    <button type="button" class="btn btn-icons btn-inverse-danger search_event" id="{{ evento.id }}3*745" data-event="3" id-event={{ evento.id }} data-toggle="modal" data-target="#deleteModal">
+                      <i class="mdi mdi-delete"></i>
+                    </button>
+                  </a>
+                </form>
+              </td>
+            </tr>
+
+          {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $('.search_event').click(_.debounce(eventSearch,
+             MILLS_TO_IGNORE_SEARCH, true));
+    });
+    </script>
+
+{% else %}
+  <div class="alert alert-info alert-dismissible" style="text-align: center;">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oh!</strong> No tienes eventos. Da clic en Crear Evento + y empieza a disfrutar de la mejor plataforma!
+  </div>
+{% endif %}

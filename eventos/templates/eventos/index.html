@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>ABC Eventos - Mis Eventos</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{% static 'vendors/iconfonts/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.addons.css' %}">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+        <a class="navbar-brand brand-logo" href="/home">
+          <img src="/static/images/descarga.png" alt="logo" />
+        </a>
+        <a class="navbar-brand brand-logo-mini" href="/home">
+          <img src="/static/images/descarga.png" alt="logo" />
+        </a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center">
+        <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
+          <li class="nav-item active" id="listar_mis_eventos">
+            <a href="#" class="nav-link">
+              <i class="mdi mdi-elevation-rise"></i>Mis Eventos</a>
+          </li>
+
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+
+          <li class="nav-item dropdown d-none d-xl-inline-block">
+            <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+              {% if user.is_authenticated %}
+              <span class="profile-text">Hello, {{ user.username }} !</span>
+              <input type="text" name="username" id="username" value="{{ user.username }}" hidden>
+              {% else %}
+              <span class="profile-text">Hello, {{ user.username }} !</span>
+              {% endif %}
+              <img class="img-xs rounded-circle" src="/static/images/faces/user.png" alt="Profile image">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+
+              <a class="dropdown-item" href="/accounts/logout">
+                Cerrar Sesión
+              </a>
+            </div>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+          <div class="row">
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-lg-12 grid-margin">
+
+              <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#createModal">Crear Evento
+                  <i class="mdi mdi-plus"></i>
+                </button>
+              </br>
+
+              {% if creacion_exitosa %}
+                  {% for msj in creacion_exitosa %}
+                    <div class="alert alert-success alert-dismissible" style="text-align: center;">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Evento Creado!</strong> {{ msj }} .
+                    </div>
+                  {% endfor %}
+              {% endif %}
+
+              {% if edicion_exitosa %}
+                  {% for msj in edicion_exitosa %}
+                    <div class="alert alert-info alert-dismissible" style="text-align: center;">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Actualizar evento!</strong> {{ msj }} .
+                    </div>
+                  {% endfor %}
+              {% endif %}
+
+              {% if msj_delete %}
+                  {% for msj in msj_delete %}
+                    <div class="alert alert-info alert-dismissible" style="text-align: center;">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <strong>Eliminar evento!</strong> {{ msj }} .
+                    </div>
+                  {% endfor %}
+              {% endif %}
+
+              <div id="miseventos"></div>
+
+            </div>
+          </div>
+
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+          <div class="container-fluid clearfix">
+            <span class="text-muted d-block text-center text-sm-right d-sm-inline-block">Copyright © 2018
+              <a href="https://twitter.com/FranciscoAriza" target="_blank">Francisco Ariza</a>. </span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- Modal Crear Evento -->
+  <div id="createModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Nuevo Evento</h4>
+        </div>
+        <div class="modal-body">
+          <form class="#" action="/evento/crear" method="post">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+            <input type="text" name="username_create" id="username_create" value="{{ user.username }}" hidden>
+            {% endif %}
+            <div class="form-group row">
+              <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Nombre</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="nombre" id="exampleInputEmail2" placeholder="Nombre del evento" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">Categoría</label>
+              <div class="col-sm-9">
+                <select class="form-control" id="exampleFormControlSelect2" name="categoria" required>
+                  <option>Conferencia</option>
+                  <option>Seminario</option>
+                  <option>Congreso</option>
+                  <option>Curso</option>
+                </select>
+            </div>
+            </div>
+            <div class="form-group row">
+              <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Lugar</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="exampleInputPassword2" name="lugar" placeholder="Lugar" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Dirección</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="exampleInputPassword2" name="direccion" placeholder="Dirección" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Fecha de Inicio</label>
+              <div class="col-sm-9">
+                <input type="date" class="form-control" id="exampleInputPassword2" name="fec_ini" placeholder="Fecha de Inicio" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Fecha de Fin</label>
+              <div class="col-sm-9">
+                <input type="date" class="form-control" id="exampleInputPassword2" name="fec_fin" placeholder="Fecha de Fin" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Tipo de Evento</label>
+              <div class="col-sm-4">
+                <div class="form-radio">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="tipo_evento" id="membershipRadios1" value="Presencial" checked> Presencial
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="form-radio">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="tipo_evento" id="membershipRadios2" value="Virtual"> Virtual
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Crear</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+  <!-- FIN Modal Crear Evento -->
+
+  <!-- Modal Detalles Evento -->
+  <div id="viewModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Detalles del Evento</h4>
+        </div>
+        <div class="modal-body">
+          <form class="#" action="/crear/evento" method="post">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+            <input type="text" name="username_create" id="username_create" value="{{ user.username }}" hidden>
+            {% endif %}
+            <div id="myevento_view"></div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+  <!-- FIN Modal Detalles Evento -->
+
+  <!-- Modal Editar Evento -->
+  <div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Evento</h4>
+        </div>
+        <div class="modal-body">
+          <form class="#" action="/evento/editar" method="post">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+            <input type="text" name="username_edit" id="username_edit" value="{{ user.username }}" hidden>
+            {% endif %}
+            <div id="myevento_edit"></div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+  <!-- FIN Modal Editar Evento -->
+
+  <!-- Modal Eliminar Evento -->
+  <div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Eliminar Evento</h4>
+        </div>
+        <div class="modal-body">
+          <form class="#" action="/evento/eliminar" method="post">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+            <input type="text" name="username_delete" id="username_delete" value="{{ user.username }}" hidden>
+            {% endif %}
+            <div id="myevento_delete"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-danger">Eliminar</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- FIN Modal Eliminar Evento -->
+
+  <!-- jQuery -->
+  <script src="/static/vendors/jquery/dist/jquery-2.2.4.min.js"></script>
+  <!-- jQuery UI -->
+  <script src="/static/vendors/jquery-ui/jquery-ui-1.12.1.min.js"></script>
+
+  <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
+  <!-- plugins:js -->
+  <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+  <script src="{% static 'vendors/js/vendor.bundle.addons.js' %}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="{% static 'js/off-canvas.js' %}"></script>
+  <script src="{% static 'js/misc.js' %}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{% static 'js/dashboard.js' %}"></script>
+  <!-- End custom js for this page-->
+
+
+
+  <script src="/static/ajax/mis_eventos_ajax_search.js"></script>
+  <script src="/static/ajax/search_event_ajax_search.js"></script>
+  <script src="/static/ajax/eventos_ajax_main.js"></script>
+
+  <script>
+
+  var SEARCH_MIS_EVENTOS_URL = "{% url 'get_eventos' %}";
+  var SEARCH_ID_EVENTO_URL = "{% url 'get_evento' %}";
+
+
+
+  // $(function() {
+  //   $("#cd_search").autocomplete({
+  //     source: "api/get_cds/",
+  //     minLength: 3,
+  //   });
+  // });
+  </script>
+
+</body>
+
+</html>

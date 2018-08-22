@@ -1,0 +1,50 @@
+{% if  mis_eventos.count > 0 %}
+  {% for  evento in mis_eventos %}
+
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Nombre</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="nombre" value="{{ evento.nombre }}" placeholder="Nombre del evento">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Nombre</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="categoria" value="{{ evento.categoria }}" placeholder="Categoría">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Lugar</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="lugar" value="{{ evento.lugar }}" placeholder="Lugar">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Dirección</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="direccion" value="{{ evento.direccion }}" placeholder="Dirección">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Fecha de Inicio</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="fec_ini" value="{{ evento.fec_inicio|date:'Y-m-d'  }}" placeholder="Fecha de Inicio">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Fecha de Fin</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="fec_fin" value="{{ evento.fec_fin|date:'Y-m-d' }}" placeholder="Fecha de Fin">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Tipo de Evento</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="tipo_evento" value="{{ evento.tipo_evento }}" placeholder="Tipo de Evento">
+      </div>
+    </div>
+  {% endfor %}
+
+{% else %}
+  Error! Cnsultar con el administrador
+{% endif %}

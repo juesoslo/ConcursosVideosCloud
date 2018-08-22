@@ -1,0 +1,78 @@
+{% if  mis_eventos.count > 0 %}
+  {% for  evento in mis_eventos %}
+
+    <input type="text" name="id_edit_event" value="{{ evento.id }}" hidden>
+
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Nombre</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="nombre" value="{{ evento.nombre }}" placeholder="Nombre del evento" required>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">Categoría</label>
+      <div class="col-sm-9">
+        <select class="form-control" id="exampleFormControlSelect2" name="categoria" required>
+          <option>{{ evento.categoria }}</option>
+          <option>Conferencia</option>
+          <option>Seminario</option>
+          <option>Congreso</option>
+          <option>Curso</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Lugar</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="lugar" value="{{ evento.lugar }}" placeholder="Lugar" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Dirección</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="direccion" value="{{ evento.direccion }}" placeholder="Dirección" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Fecha de Inicio</label>
+      <div class="col-sm-9">
+        <input type="date" class="form-control" name="fec_ini" value="{{ evento.fec_inicio|date:'Y-m-d'  }}" placeholder="Fecha de Inicio" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Fecha de Fin</label>
+      <div class="col-sm-9">
+        <input type="date" class="form-control" name="fec_fin" value="{{ evento.fec_fin|date:'Y-m-d' }}" placeholder="Fecha de Fin" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Tipo de Evento</label>
+      <div class="col-sm-4">
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            {% if evento.tipo_evento == "Presencial" %}
+              <input type="radio" class="form-check-input" name="tipo_evento" id="membershipRadios10" value="Presencial" checked> Presencial
+            {% else %}
+              <input type="radio" class="form-check-input" name="tipo_evento" id="membershipRadios10" value="Presencial"> Presencial
+            {% endif %}
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            {% if evento.tipo_evento == "Virtual" %}
+              <input type="radio" class="form-check-input" name="tipo_evento" id="membershipRadios20" value="Virtual" checked> Virtual
+            {% else %}
+              <input type="radio" class="form-check-input" name="tipo_evento" id="membershipRadios20" value="Virtual"> Virtual
+            {% endif %}
+          </label>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+{% else %}
+  Error! Cnsultar con el administrador
+{% endif %}
