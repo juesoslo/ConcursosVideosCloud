@@ -1,0 +1,5 @@
+Django
+django-registration
+django-registration-redux
+django-tools
+djangorestframework
