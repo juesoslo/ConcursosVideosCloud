@@ -36,9 +36,7 @@ var eventSearch = function()  {
       /*
         Using GET allows you to directly call the search page in
         the browser:
-
         http://the.url/search/?color_search_text=bl
-
         Also, GET-s do not require the csrf_token
        */
       type: "GET",
