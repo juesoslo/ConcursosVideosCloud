@@ -76,17 +76,17 @@ WSGI_APPLICATION = 'project0.wsgi.application'
 
 DATABASES = {
     ## Connect to my Home Database
-    # 'default': {
-    #     'NAME': 'cloud',
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'OPTIONS' : {
-    #             'options': '-c search_path=project0'
-    #         },
-    #     'USER': 'postgres',
-    #     'PASSWORD': '14827',
-    #     'HOST': 'localhost',
-    #     'PORT': '5434',
-    # }
+    'default': {
+        'NAME': 'cloud',
+        'ENGINE': 'django.db.backends.postgresql',
+        'OPTIONS' : {
+                'options': '-c search_path=project0'
+            },
+        'USER': 'postgres',
+        'PASSWORD': '14827',
+        'HOST': 'localhost',
+        'PORT': '5434',
+    }
     ## Connect to my AWS Database
     # 'default': {
     #     'NAME': 'baltetlcgm',
@@ -100,17 +100,17 @@ DATABASES = {
     #     'PORT': '5432',
     # }
     ## Connect to my Cloud VM Uniandes Database
-    'default': {
-        'NAME': 'cloud',
-        'ENGINE': 'django.db.backends.postgresql',
-        'OPTIONS' : {
-                'options': '-c search_path=project0'
-            },
-        'USER': 'postgres',
-        'PASSWORD': '14827',
-        'HOST': '172.24.42.21',
-        'PORT': '5432',
-    }
+    # 'default': {
+    #     'NAME': 'cloud',
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'OPTIONS' : {
+    #             'options': '-c search_path=project0'
+    #         },
+    #     'USER': 'postgres',
+    #     'PASSWORD': '14827',
+    #     'HOST': '172.24.42.21',
+    #     'PORT': '5432',
+    # }
 }
 
 # Password validation
