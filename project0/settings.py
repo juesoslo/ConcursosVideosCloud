@@ -31,14 +31,15 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'eventos',
-    'concursos',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'eventos',
+    'concursos',
+    'plataforma_concurso'
 ]
 
 MIDDLEWARE = [
@@ -101,16 +102,20 @@ DATABASES = {
     #     'PORT': '5432',
     # }
     ## Connect to my Cloud VM Uniandes Database
+    # 'default': {
+    #     'NAME': 'cloud',
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'OPTIONS': {
+    #         'options': '-c search_path=project0'
+    #     },
+    #     'USER': 'postgres',
+    #     'PASSWORD': '14827',
+    #     'HOST': '172.24.42.21',
+    #     'PORT': '5432',
+    # }
     'default': {
-        'NAME': 'cloud',
-        'ENGINE': 'django.db.backends.postgresql',
-        'OPTIONS' : {
-                'options': '-c search_path=project0'
-            },
-        'USER': 'postgres',
-        'PASSWORD': '14827',
-        'HOST': '172.24.42.21',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
     }
 }
 
