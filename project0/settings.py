@@ -31,14 +31,15 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'eventos',
-    'concursos',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'eventos',
+    'concursos',
+    'plataforma_concurso'
 ]
 
 MIDDLEWARE = [
@@ -104,14 +105,27 @@ DATABASES = {
     # 'default': {
     #     'NAME': 'cloud',
     #     'ENGINE': 'django.db.backends.postgresql',
+<<<<<<< HEAD
     #     'OPTIONS' : {
     #             'options': '-c search_path=project0'
     #         },
+=======
+    #     'OPTIONS': {
+    #         'options': '-c search_path=project0'
+    #     },
+>>>>>>> develop
     #     'USER': 'postgres',
     #     'PASSWORD': '14827',
     #     'HOST': '172.24.42.21',
     #     'PORT': '5432',
     # }
+<<<<<<< HEAD
+=======
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
+    }
+>>>>>>> develop
 }
 
 # Password validation

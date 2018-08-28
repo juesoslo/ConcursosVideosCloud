@@ -72,7 +72,8 @@ def index(request):
 
 @login_required
 def home(req):
-    return render(req, 'eventos/index.html', {'STATIC_URL': settings.STATIC_URL})
+    return render(req, 'concursos/index.html', {'STATIC_URL': settings.STATIC_URL})
+    #return render(req, 'eventos/index.html', {'STATIC_URL': settings.STATIC_URL})
 
 
 @login_required
