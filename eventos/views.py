@@ -11,36 +11,41 @@ def login_ini(request):
     return render(request, 'eventos/login.html')
 
 def login_view(request):
-    errors = []
-    username = request.POST.get('email', '')
-    password = request.POST.get('password', '')
-    next = request.POST.get('next', '')
+    if request.method == "POST":
+        errors = []
+        username = request.POST.get('email', '')
+        password = request.POST.get('password', '')
+        next = request.POST.get('next', '')
 
-    user = auth.authenticate(username=username, password=password)
-    if user is not None and user.is_active:
-        # Correct password, and the user is marked "active"
-        auth.login(request, user)
-        # Verify variable context
-        return HttpResponseRedirect('/account/loggedin')
+        user = auth.authenticate(username=username, password=password)
+        if user is not None and user.is_active:
+            # Correct password, and the user is marked "active"
+            auth.login(request, user)
+            # Verify variable context
+            return HttpResponseRedirect('/account/loggedin')
 
+        else:
+            # Show an error page
+            errors.append('Lo sentimos, nombre de usuario o contraseña no válidos.')
+
+            return render(request, 'eventos/landing.html', {'errors': errors, 'username': username})
     else:
-        # Show an error page
-        errors.append('Lo sentimos, nombre de usuario o contraseña no válidos.')
-
-        return render(request, 'eventos/login.html', {'errors': errors, 'username': username})
+        return render(request, 'eventos/login.html')
 
 def logout_view(request):
     auth.logout(request)
     # Redirect to a success page.
-    return render(request, 'eventos/login.html')
+    return render(request, 'eventos/landing.html')
 
 
 
 def registro_view(req):
-    return render(req, 'eventos/register.html', {'STATIC_URL': settings.STATIC_URL})
+    return render(req, 'eventos/signup-step2.html', {'STATIC_URL': settings.STATIC_URL})
 
 def registrar(request):
     errors = []
+    nombres = request.POST.get('nombres', '')
+    apellidos = request.POST.get('apellidos', '')
     username = request.POST.get('email', '')
     password = request.POST.get('password', '')
     password_confirm = request.POST.get('password_confirm', '')
@@ -50,25 +55,27 @@ def registrar(request):
     if search > 0:
         # Verify variable context
         errors.append('El e-mail ingresado ya se encuentra registrado.')
-        return render(request, 'eventos/register.html', {'errors': errors, 'username' : username})
+        return render(request, 'eventos/signup-step2.html', {'errors': errors, 'username' : username})
     elif password != password_confirm:
 
         # Show an error page
         errors.append('Las contraseñas ingresadas no coinciden.')
-        return render(request, 'eventos/register.html', {'errors': errors})
+        return render(request, 'eventos/signup-step2.html', {'errors': errors})
     else:
 
-        user = User.objects.create_user(username=username,
+        user = User.objects.create_user(first_name=nombres, last_name=apellidos, username=username,
                                  email=username,
                                  password=password)
 
         errors.append('La cuenta se ha creado exitosamente.')
-        return render(request, 'eventos/register.html', {'success': errors})
+        return render(request, 'eventos/signup-step2.html', {'success': errors})
+
+def landing(request):
+    return render(request, 'eventos/landing.html')
 
 @login_required
 def index(request):
-
-    return render(request, 'eventos/index.html')
+    return render(request, 'concursos/index.html')
 
 @login_required
 def home(req):

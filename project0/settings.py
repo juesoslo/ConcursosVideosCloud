@@ -78,17 +78,17 @@ WSGI_APPLICATION = 'project0.wsgi.application'
 
 DATABASES = {
     ## Connect to my Home Database
-    'default': {
-        'NAME': 'cloud',
-        'ENGINE': 'django.db.backends.postgresql',
-        'OPTIONS' : {
-                'options': '-c search_path=project0'
-            },
-        'USER': 'postgres',
-        'PASSWORD': '14827',
-        'HOST': 'localhost',
-        'PORT': '5434',
-    }
+    # 'default': {
+    #     'NAME': 'cloud',
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'OPTIONS' : {
+    #             'options': '-c search_path=project0'
+    #         },
+    #     'USER': 'postgres',
+    #     'PASSWORD': '14827',
+    #     'HOST': 'localhost',
+    #     'PORT': '5434',
+    # }
     ## Connect to my AWS Database
     # 'default': {
     #     'NAME': 'baltetlcgm',
@@ -105,27 +105,26 @@ DATABASES = {
     # 'default': {
     #     'NAME': 'cloud',
     #     'ENGINE': 'django.db.backends.postgresql',
-<<<<<<< HEAD
+
     #     'OPTIONS' : {
     #             'options': '-c search_path=project0'
     #         },
-=======
+
     #     'OPTIONS': {
     #         'options': '-c search_path=project0'
     #     },
->>>>>>> develop
+
     #     'USER': 'postgres',
     #     'PASSWORD': '14827',
     #     'HOST': '172.24.42.21',
     #     'PORT': '5432',
     # }
-<<<<<<< HEAD
-=======
+
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'mydatabase',
     }
->>>>>>> develop
+
 }
 
 # Password validation
