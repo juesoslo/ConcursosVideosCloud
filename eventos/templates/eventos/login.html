@@ -35,8 +35,8 @@
 		  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
 		    <div class="modal-content">
 				 <div class="modal-header-pro">
-					 <h2>Welcome Back</h2>
-					 <h6>Sign in to your account to continue using SKRN</h6>
+					 <h2>Bienvenid@</h2>
+					 <h6>Inicie sesión en su cuenta para continuar usando SmartTools</h6>
 				 </div>
 				 <div class="modal-body-pro social-login-modal-body-pro">
 
@@ -44,10 +44,10 @@
 						 <form action="/accounts/login/" method="POST">
 							 {% csrf_token %}
 							 <div class="form-group">
-								 <input type="email" class="form-control" id="username" name="email" placeholder="Username (email)" required>
+								 <input type="email" class="form-control" id="username" name="email" placeholder="Nombre de usuario (email)" required>
 							 </div>
 							 <div class="form-group">
-								 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+								 <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
 							 </div>
 							 {% if errors %}
 									 {% for error in errors %}
@@ -57,12 +57,12 @@
 									 {% endfor %}
 							 {% endif %}
 							 <div class="form-group">
-								 <button type="submit" class="btn btn-green-pro btn-display-block">Sign In</button>
+								 <button type="submit" class="btn btn-green-pro btn-display-block">Ingresar</button>
 							 </div>
 							 <div class="container-fluid">
 								 <div class="row no-gutters">
-							 		<div class="col checkbox-remember-pro"><input type="checkbox" id="checkbox-remember"><label for="checkbox-remember" class="col-form-label">Remember me</label></div>
-									<div class="col forgot-your-password"><a href="#!">Forgot your password?</a></div>
+							 		<div class="col checkbox-remember-pro"><input type="checkbox" id="checkbox-remember" checked><label for="checkbox-remember" class="col-form-label">Recordarme</label></div>
+									<div class="col forgot-your-password"><a href="#!">¿Olvidaste la conraseña?</a></div>
 								</div>
 							</div><!-- close .container-fluid -->
 
@@ -75,7 +75,7 @@
 
  		      </div><!-- close .modal-body -->
 
-			 <a class="not-a-member-pro" href="/registro">Not a member? <span>Join Today!</span></a>
+			 <a class="not-a-member-pro" href="/registro">¿No eres miembro? <span>¡Únete ahora!</span></a>
 		    </div><!-- close .modal-content -->
 		  </div><!-- close .modal-dialog -->
 		</div><!-- close .modal -->

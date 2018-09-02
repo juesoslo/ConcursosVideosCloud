@@ -30,7 +30,7 @@ def login_view(request):
 
             return render(request, 'eventos/landing.html', {'errors': errors, 'username': username})
     else:
-        return render(request, 'eventos/login.html')
+        return render(request, 'eventos/landing.html')
 
 def logout_view(request):
     auth.logout(request)
@@ -41,6 +41,9 @@ def logout_view(request):
 
 def registro_view(req):
     return render(req, 'eventos/signup-step2.html', {'STATIC_URL': settings.STATIC_URL})
+
+def precios_view(req):
+    return render(req, 'eventos/signup-step1.html', {'STATIC_URL': settings.STATIC_URL})
 
 def registrar(request):
     errors = []

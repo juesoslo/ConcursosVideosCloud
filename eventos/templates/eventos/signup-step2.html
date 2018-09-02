@@ -1,5 +1,10 @@
 {% extends 'eventos/base_landing.html' %}
 
+{% block head %}
+
+<title>Smart Tools - Registrar</title>
+
+{% endblock %}
 
 {% block content %}
 
@@ -7,32 +12,32 @@
 
   	 		<div class="container">
 					<div class="centered-headings-pro pricing-plans-headings">
-						<h6>For one low monthly price</h6>
-						<h1>Instantly watch TV shows &amp; Movies</h1>
+						<h6>Por un bajo precio mensual</h6>
+						<h1>Crea concursos de videos para tus clientes</h1>
 					</div>
 			</div><!-- close .container -->
 
 			<div class="container">
 				<ul id="registration-steps-pro">
 					<li>
-						<a href="/eventos/templates/eventos/signup-step1.html">
+						<a href="/precios">
 							<div class="registration-step-circle-icon">01</div>
-							<div class="registration-step-number">Step 1</div>
-							<h5 class="registration-step-title">Choose your plan</h5>
+							<div class="registration-step-number">Paso 1</div>
+							<h5 class="registration-step-title">Selecciona tu plan</h5>
 						</a>
 					</li>
 					<li class="current-menu-item">
-						<a href="signup-step2.html">
+						<a href="/registro">
 							<div class="registration-step-circle-icon">02</div>
-							<div class="registration-step-number">Step 2</div>
-							<h5 class="registration-step-title">Create your account</h5>
+							<div class="registration-step-number">Paso 2</div>
+							<h5 class="registration-step-title">Crea tu cuenta</h5>
 						</a>
 					</li>
 					<li>
-						<a href="signup-step4.html">
+						<a href="#">
 							<div class="registration-step-circle-icon">03</div>
-							<div class="registration-step-number">Step 3</div>
-							<h5 class="registration-step-title">Welcome to Smart Tools!</h5>
+							<div class="registration-step-number">Paso 3</div>
+							<h5 class="registration-step-title">Bienvenid@ a SmartTools!</h5>
 						</a>
 					</li>
 				</ul>
@@ -64,7 +69,7 @@
     	  						 <div class="form-group">
     								 <div class="row">
     									<div class="col">
-    	  								 <label for="password" class="col-form-label">Password</label>
+    	  								 <label for="password" class="col-form-label">Contraseña</label>
     	  	  							 <input type="password" class="form-control" id="password" name="password" placeholder="&middot;&middot;&middot;&middot;&middot;&middot;" required>
     									</div>
     									<div class="col">
@@ -96,8 +101,8 @@
 	  						 <div class="form-group last-form-group-continue">
 									 <button class="btn btn-green-pro submit-btn">Registrar</button>
 	  							 <!-- <a href="signup-step3.html" class="btn btn-green-pro">Continue</a> -->
-								 <span class="checkbox-remember-pro"><input type="checkbox" id="checkbox-terms"><label for="checkbox-terms" class="col-form-label">By clicking "Continue", you agree to our <a href="#!">Terms of Use</a> and
-<a href="#!">Privacy Policy</a> including the use of cookies.</label></span>
+								 <span class="checkbox-remember-pro"><input type="checkbox" id="checkbox-terms" checked required><label for="checkbox-terms" class="col-form-label">Al hacer clic en "Registrar", usted acepta nuestros <a href="#!">Términos de Uso</a> y
+<a href="#!">Política de Privacidad</a> incluído el uso de cookies.</label></span>
 								 <div class="clearfix"></div>
 	  						 </div>
 	  					 </form>
