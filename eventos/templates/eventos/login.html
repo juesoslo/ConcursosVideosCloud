@@ -1,137 +1,107 @@
-<!DOCTYPE html>
 {% load staticfiles %}
-<html lang="es">
+<html>
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Project 0 - ABC Eventos</title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="{% static 'vendors/iconfonts/mdi/css/materialdesignicons.min.css' %}">
-  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
-  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.addons.css' %}">
-  <!-- endinject -->
-  <!-- plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="{% static 'vendors/bootstrap/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style_landing.css' %}">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:400,700%7CMontserrat:300,400,600,700">
+
+	<link rel="stylesheet" href="{% static 'vendors/icons/fontawesome/css/fontawesome-all.min.css' %}"><!-- FontAwesome Icons -->
+	<link rel="stylesheet" href="{% static 'vendors/icons/Iconsmind__Ultimate_Pack/Line%20icons/styles.min.css' %}"><!-- iconsmind.com Icons -->
+
+
+{% block head %}
+
+<title>Smart Tools - Login</title>
+
+{% endblock %}
 </head>
-
 <body>
-  <div class="container-scroller">
-    <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
-      <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
-        <div class="row w-100">
-          <div class="col-lg-4 mx-auto">
-            <div class="auto-form-wrapper">
 
-              {% if user.is_authenticated %}
 
-                <div class="form-group">
-                  <label class="label">Has iniciado sesión con el email</label>
-                  <div class="input-group">
-                    <input type="email" class="form-control" placeholder="e-mail" name="email" readonly value="{{ user.username }}">
-                    <div class="input-group-append">
-                      <span class="input-group-text">
-                        <i class="mdi mdi-check-circle-outline"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
+		{%  block content %}
 
-                <form class="" action="/account/loggedin" method="post">
-                  {% csrf_token %}
-                  <div class="form-group">
-                    <button class="btn btn-info submit-btn btn-block">Continuar como {{ user.username }}</button>
-                  </div>
-                </form>
 
-                <form class="" action="/accounts/logout" method="post">
-                  {% csrf_token %}
-                  <div class="form-group">
-                    <button class="btn btn-primary submit-btn btn-block">Cerrar Sesión</button>
-                  </div>
-                </form>
 
-              {% else %}
-                <form action="/accounts/login/" method="POST">
-                  {% csrf_token %}
-                  <div class="form-group">
-                    <label class="label">e-mail</label>
-                    <div class="input-group">
-                      <input type="email" class="form-control" placeholder="e-mail" name="email" value="{{ username }}" required>
-                      <div class="input-group-append">
-                        <span class="input-group-text">
-                          <i class="mdi mdi-check-circle-outline"></i>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="label">Contraseña</label>
-                    <div class="input-group">
-                      <input type="password" class="form-control" placeholder="*********" name="password" required>
-                      <div class="input-group-append">
-                        <span class="input-group-text">
-                          <i class="mdi mdi-check-circle-outline"></i>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  {% if errors %}
-                      {% for error in errors %}
-                        <div class="alert alert-danger" style="text-align: center;">
-                          <strong>Error!</strong> {{ error }} .
-                        </div>
-                      {% endfor %}
-                  {% endif %}
+		<!-- Modal -->
+		<div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="LoginModal" aria-hidden="true">
+			 <button type="button" class="close float-close-pro" data-dismiss="modal" aria-label="Close">
+			           <span aria-hidden="true">&times;</span>
+			</button>
+		  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+		    <div class="modal-content">
+				 <div class="modal-header-pro">
+					 <h2>Bienvenid@</h2>
+					 <h6>Inicie sesión en su cuenta para continuar usando SmartTools</h6>
+				 </div>
+				 <div class="modal-body-pro social-login-modal-body-pro">
 
-                  {% if form.errors %}
-                    <p class="error">{{errors}}</p>
-                  {% endif %}
-                  <div class="form-group">
-                    <button class="btn btn-primary submit-btn btn-block">Ingresar</button>
-                  </div>
-                  <div class="form-group d-flex justify-content-between">
-                    <div class="form-check form-check-flat mt-0">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" checked> Mantener sesión iniciada
-                      </label>
-                    </div>
-                    <a href="#" class="text-small forgot-password text-black">Recordar Contraseña</a>
-                  </div>
-                  <div class="text-block text-center my-3">
-                    <span class="text-small font-weight-semibold">¿No eres usuario?</span>
-                    <a href="/registro" class="text-black text-small">Registrarse</a>
-                  </div>
-                </form>
+					 <div class="registration-social-login-container">
+						 <form action="/accounts/login/" method="POST">
+							 {% csrf_token %}
+							 <div class="form-group">
+								 <input type="email" class="form-control" id="username" name="email" placeholder="Nombre de usuario (email)" required>
+							 </div>
+							 <div class="form-group">
+								 <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+							 </div>
+							 {% if errors %}
+									 {% for error in errors %}
+										 <div class="alert alert-danger" style="text-align: center;">
+											 <strong>Error!</strong> {{ error }}
+										 </div>
+									 {% endfor %}
+							 {% endif %}
+							 <div class="form-group">
+								 <button type="submit" class="btn btn-green-pro btn-display-block">Ingresar</button>
+							 </div>
+							 <div class="container-fluid">
+								 <div class="row no-gutters">
+							 		<div class="col checkbox-remember-pro"><input type="checkbox" id="checkbox-remember" checked><label for="checkbox-remember" class="col-form-label">Recordarme</label></div>
+									<div class="col forgot-your-password"><a href="#!">¿Olvidaste la conraseña?</a></div>
+								</div>
+							</div><!-- close .container-fluid -->
 
-              {% endif %}
+						 </form>
 
-            </div>
+					 </div><!-- close .registration-social-login-container -->
 
-          </br>
+					 <div class="clearfix"></div>
 
-            <p class="footer-text text-center"> © 2018 Francisco Ariza.</p>
-          </div>
-        </div>
-      </div>
-      <!-- content-wrapper ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-  <!-- plugins:js -->
-  <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
-  <script src="{% static 'vendors/js/vendor.bundle.addons.js' %}"></script>
-  <!-- endinject -->
-  <!-- inject:js -->
-  <script src="{% static 'js/off-canvas.js' %}"></script>
-  <script src="{% static 'js/misc.js' %}"></script>
-  <!-- endinject -->
-</body>
 
+ 		      </div><!-- close .modal-body -->
+
+			 <a class="not-a-member-pro" href="/registro">¿No eres miembro? <span>¡Únete ahora!</span></a>
+		    </div><!-- close .modal-content -->
+		  </div><!-- close .modal-dialog -->
+		</div><!-- close .modal -->
+
+		{% endblock %}
+
+
+
+
+<!-- Required Framework JavaScript -->
+<script src="{% static 'vendors/jquery/jquery-3.3.1.min.js' %}"></script><!-- jQuery -->
+<script src="{% static 'vendors/js/popper.min.js' %}" defer></script><!-- Bootstrap Popper/Extras JS -->
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}" defer></script><!-- Bootstrap Main JS -->
+<!-- All JavaScript in Footer -->
+
+<!-- Additional Plugins and JavaScript -->
+<script src="{% static 'vendors/js/navigation.js' %}" defer></script><!-- Header Navigation JS Plugin -->
+<script src="{% static 'vendors/js/jquery.flexslider-min.js' %}" defer></script><!-- FlexSlider JS Plugin -->
+<script src="{% static 'vendors/js/script.js' %}" defer></script><!-- Custom Document Ready JS -->
+
+<script>
+$(document).ready(function() {
+    $('#LoginModal').modal('show');
+});
+
+</script>
+
+		</body>
 </html>
