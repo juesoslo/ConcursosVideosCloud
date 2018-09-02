@@ -51,11 +51,7 @@ class Participante(models.Model):
     apellido = models.CharField(max_length=255)  # el apellido del participante
     email = models.EmailField(max_length=255)  # el correo del participante
     mensaje = models.TextField()  # mensaje relacionado con el video
-<<<<<<< HEAD
-    concurso = models.ForeignKey(Concurso, on_delete=models.PROTECT)
-=======
     concurso = models.ForeignKey(Concurso, on_delete=models.PROTECT, related_name='participantes')
->>>>>>> andres
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
