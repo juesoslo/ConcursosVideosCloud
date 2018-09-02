@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,3 +30,57 @@
 </script>
 </body>
 </html>
+=======
+{% extends 'skrn/base.html' %}
+
+{% block content %}
+    <div class="dashboard-container">
+        <div class="registration-billing-form">
+            <div class="row">
+                <div class="billing-form-pro">
+                    <form>
+                        <input type="hidden" value="{{ csrf_token }}">
+                        {% for field in form %}
+                            {% if field.name == 'video' %}
+                                <div class="form-group">
+                                    <div class="hidden">
+                                        {{ form.video }}
+                                        <input type="file" id="hidden_image_upload"/>
+                                    </div>
+                                    <div id="upload_image_button">Upload video</div>
+                                    <div id="upload_image_errors"></div>
+                                    <div id="image_preview"></div>
+                                </div>
+                            {% else %}
+                                <div class="form-group">
+                                    <label for="{{ field.name }}" class="col-form-label">{{ field.label }}:</label>
+                                    {{ field }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </form>
+                </div>
+            </div><!-- close .row -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="application/javascript">
+
+    </script>
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .registration-billing-form {
+            padding: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+>>>>>>> andres

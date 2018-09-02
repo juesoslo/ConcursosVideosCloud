@@ -14,6 +14,12 @@ class ParticipanteForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ParticipanteForm, self).__init__(*args, **kwargs)
+<<<<<<< HEAD
+=======
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+
+>>>>>>> andres
         if self.instance.pk:
             self.fields['video'].initial = VideoRelacionado.objects.get(participantevideo__participante=self.instance).values_list('id', flat=True)
 
