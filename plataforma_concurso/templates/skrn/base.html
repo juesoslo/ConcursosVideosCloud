@@ -1,0 +1,89 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href='{% static "/css/bootstrap.min.css" %}'>
+    <link rel="stylesheet" href='{% static "/css/style_skrn.css" %}'>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:400,700%7CMontserrat:300,400,600,700">
+
+    <link rel="stylesheet" href='{% static "/icons/fontawesome/css/fontawesome-all.min.css" %}'>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href='{% static  "/icons/Iconsmind__Ultimate_Pack/Line%20icons/styles.min.css" %}'>
+    <!-- iconsmind.com Icons -->
+
+    <title>Plataforma videos</title>
+
+    {% block styles %}
+    {% endblock %}
+</head>
+<body>
+{% url 'platform_index' as platform_index %}
+{% url 'platform_videos' as platform_videos %}
+{% url 'platform_form' as platform_form %}
+
+<div id="sidebar-bg">
+    <nav id="sidebar-nav" style="padding-top: 5px"><!-- Add class="sticky-sidebar-js" for auto-height sidebar -->
+        <ul id="vertical-sidebar-nav" class="sf-menu">
+            <div id="video-logo-background"><a href="{{ platform_index }}" style="padding-top: 5px"><img
+                    src="../../static/images/logo-video-layout.png" alt="Logo"></a></div>
+
+            <li class="normal-item-pro {% ifequal request.path platform_index %}current-menu-item{% endifequal %}">
+                <a href="{{ platform_index }}">
+                    <span class="icon-Old-TV"></span>
+                    Concurso
+                </a>
+            </li>
+            <li class="normal-item-pro {% ifequal request.path platform_videos %}current-menu-item{% endifequal %}">
+                <a href="{{ platform_videos }}">
+                    <span class="icon-Movie"></span>
+                    Videos
+                </a>
+            </li>
+            <li class="normal-item-pro {% ifequal request.path platform_form %}current-menu-item{% endifequal %}">
+                <a href="{{ platform_form }}">
+                    <span class="icon-Upload-2"></span>
+                    Carga tu video
+                </a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </nav>
+
+    <main id="col-main">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+</div><!-- close #sidebar-bg-->
+
+<script>
+    var static_url = '{% static "" %}'
+</script>
+
+<!-- Required Framework JavaScript -->
+<script src='{% static "js/libs/jquery-3.3.1.min.js" %}'></script><!-- jQuery -->
+<script src='{% static "js/libs/popper.min.js" %}' defer></script><!-- Bootstrap Popper/Extras JS -->
+<script src='{% static "js/libs/bootstrap.min.js" %}' defer></script><!-- Bootstrap Main JS -->
+<!-- All JavaScript in Footer -->
+
+<!-- Additional Plugins and JavaScript -->
+<script src='{% static "js/navigation.js" %}' defer></script><!-- Header Navigation JS Plugin -->
+<script src='{% static "js/jquery.flexslider-min.js" %}' defer></script><!-- FlexSlider JS Plugin -->
+<script src='{% static "js/jquery-asRange.min.js" %}' defer></script><!-- Range Slider JS Plugin -->
+<script src='{% static "js/circle-progress.min.js" %}' defer></script><!-- Circle Progress JS Plugin -->
+<script src='{% static "js/afterglow.min.js" %}' defer></script><!-- Video Player JS Plugin -->
+<script src='{% static "js/script.js" %}' defer></script><!-- Custom Document Ready JS -->
+<script src='{% static "js/script-dashboard.js" %}' defer></script><!-- Custom Document Ready for Dashboard Only JS -->
+{% block scripts %}
+{% endblock %}
+
+
+</body>
+
+<!-- Mirrored from progression-studios.com/skrn/dashboard-home.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 26 Aug 2018 13:36:07 GMT -->
+</html>
