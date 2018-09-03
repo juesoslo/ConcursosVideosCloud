@@ -66,9 +66,14 @@ def get_concurso(request):
 def crear_concurso(request):
     errors = []
     if request.method == "POST":
+        
+        #Cargue del banner
+        banner = ''
+        for f in request.FILES.getlist('banner'):
+            banner = f
+
         username = request.POST.get('username_create', '')
         nombre = request.POST.get('nombre', '')
-        banner = request.POST.get('banner', '')
         url = request.POST.get('url', '')
         fec_ini = request.POST.get('fec_ini', '')
         fec_fin = request.POST.get('fec_fin', '')
@@ -91,14 +96,18 @@ def crear_concurso(request):
 
 
 @login_required
-def editar_concurso(request):
+def editar_concurso(request, *args, **kwargs):
     errors = []
     if request.method == "POST":
         username = request.POST.get('username_edit', '')
         id_concurso =request.POST.get('id_edit_event', '')
 
+        #Cargue del banner
+        banner = ''
+        for f in request.FILES.getlist('banner'):
+            banner = f
+
         nombre = request.POST.get('nombre', '')
-        banner = request.POST.get('banner', '')
         url = request.POST.get('url', '')
         fec_ini = request.POST.get('fec_ini', '')
         fec_fin = request.POST.get('fec_fin', '')
@@ -108,8 +117,10 @@ def editar_concurso(request):
         for concurso in concursos:
             #print(concurso.usuario, username)
             if username == concurso.usuario:
+                if banner != '': #Sólo cambia el banner si se sube un archivo
+                    concurso.banner = banner
+
                 concurso.nombre = nombre
-                concurso.banner = banner
                 concurso.url = url
                 concurso.fec_inicio = fec_ini
                 concurso.fec_fin = fec_fin

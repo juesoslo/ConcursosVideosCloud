@@ -13,8 +13,9 @@
     <div class="form-group row">
       <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">Banner o imagen</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" name="banner" value="{{ concurso.banner }}" placeholder="Banner o imagen del concurso" required>
+        <input type="file" class="form-control" name="banner" value="" placeholder="Banner o imagen del concurso">
       </div>
+      <img src="{{ concurso.banner.url }}" width="468" height="60">
     </div>
     <div class="form-group row">
       <label for="exampleInputPassword2" class="col-sm-3 col-form-label">URL única</label>
