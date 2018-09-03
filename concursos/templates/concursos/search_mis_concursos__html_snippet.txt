@@ -9,11 +9,9 @@
             <tr class="table-primary">
               <th>Fecha Creación</th>
               <th>Nombre</th>
-              <th>Banner</th>
               <th>Url</th>
               <th>Fecha Inicio</th>
               <th>Fecha Fin</th>
-              <th>Descripción</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -23,12 +21,10 @@
           {% for  concurso in mis_concursos %}
             <tr>
               <td>{{concurso.created_at}}</td>
-              <td>{{concurso.nombre}}</td>
-              <td>{{concurso.banner}}</td>
-              <td>{{concurso.url}}</td>
-              <td>{{concurso.fec_inicio}}</td>
-              <td>{{concurso.fec_fin}}</td>
-              <td>{{concurso.descripcion}}</td>
+              <td title="{{concurso.nombre}}: {{concurso.descripcion}}">{{concurso.nombre}}</td>
+              <td title="{{concurso.nombre}}: {{concurso.descripcion}}">{{concurso.url}}</td>
+              <td title="{{concurso.nombre}}: {{concurso.descripcion}}">{{concurso.fec_inicio}}</td>
+              <td title="{{concurso.nombre}}: {{concurso.descripcion}}">{{concurso.fec_fin}}</td>
               <td>
                 <form>
                   <input type="text" name="id_concurso" value="{{ concurso.id }}" hidden>

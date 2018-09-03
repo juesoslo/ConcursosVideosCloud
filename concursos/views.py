@@ -96,7 +96,7 @@ def crear_concurso(request):
 
 
 @login_required
-def editar_concurso(request, *args, **kwargs):
+def editar_concurso(request):
     errors = []
     if request.method == "POST":
         username = request.POST.get('username_edit', '')
