@@ -1,35 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Formulario participante</title>
-</head>
-<body>
-<a href="{% url 'platform_index' %}">volver</a>
-
-<form>
-    <input type="hidden" value="{{ csrf_token }}">
-    {% for field in form %}
-        {% if field.name == 'video' %}
-            <div class="hidden">
-                {{ form.image }}
-                <input type="file" id="hidden_image_upload"/>
-            </div>
-            <div id="upload_image_button">Upload video</div>
-            <div id="upload_image_errors"></div>
-            <div id="image_preview"></div>
-        {% else %}
-           {{ field.label }} {{ field }}
-        {% endif %}
-    {% endfor %}
-</form>
-
-<script type="application/javascript">
-    var csrf_token = "{{ csrf_token }}";
-</script>
-</body>
-</html>
-=======
 {% extends 'skrn/base.html' %}
 
 {% block content %}
