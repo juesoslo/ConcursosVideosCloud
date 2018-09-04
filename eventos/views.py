@@ -6,6 +6,11 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from .models import Evento
 
+def crear_url_automatica( ):
+    unique_id = get_random_string(length=6)
+    url_unica = 'concurso'+unique_id
+    return url_unica
+
 # Create your views here.
 def login_ini(request):
     return render(request, 'eventos/login.html')
@@ -82,7 +87,13 @@ def index(request):
 
 @login_required
 def home(req):
-    return render(req, 'concursos/index.html', {'STATIC_URL': settings.STATIC_URL})
+    url_unica = crear_url_automatica()
+    context = {
+        'STATIC_URL': settings.STATIC_URL,
+        "url_unica": url_unica
+    };
+    return render(req, 'concursos/index.html', context)
+    #return render(req, 'concursos/index.html', {'STATIC_URL': settings.STATIC_URL})
     #return render(req, 'eventos/index.html', {'STATIC_URL': settings.STATIC_URL})
 
 

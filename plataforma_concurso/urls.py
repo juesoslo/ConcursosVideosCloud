@@ -9,6 +9,7 @@ ajax_router.register(r'', RelatedImageAJAXView)
 
 urlpatterns = [
     path('', views.index, name='platform_index'),
-    path('nuevo', views.formulario_participante, name='platform_form'),
+    path('videos/', views.videos, name='platform_videos'),
+    path('nuevo/', views.formulario_participante, name='platform_form'),
     path('api/videos_relacionados/', include(ajax_router.urls)),
 ]

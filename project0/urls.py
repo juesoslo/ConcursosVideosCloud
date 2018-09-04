@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
+
+admin.autodiscover()
 
 urlpatterns = [
-    path('', include('eventos.urls')),
+    path('', include('eventos.urls')), #No borrar, para que funcione el Login
     path('concursos/', include('concursos.urls')),
     path('platform/', include('plataforma_concurso.urls')),
     path('admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
