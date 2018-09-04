@@ -1,8 +1,10 @@
+<div>{{ errores }}</div>
+
 {% if  mis_concursos.count > 0 %}
   {% for  concurso in mis_concursos %}
 
     <input type="text" name="id_edit_event" value="{{ concurso.id }}" hidden>
-
+    
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Nombre del concurso</label>
       <div class="col-sm-9">
