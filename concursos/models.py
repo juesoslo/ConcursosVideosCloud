@@ -33,7 +33,7 @@ class VideoRelacionado(models.Model):
     video = models.FileField(upload_to='videos/')
     estado = models.CharField(
         max_length=10,
-        choices=[(tag, tag.value) for tag in EstadosVideoOpciones],
+        choices=[(tag.name, tag.value) for tag in EstadosVideoOpciones],
         default=EstadosVideoOpciones.TODO
     )
 
