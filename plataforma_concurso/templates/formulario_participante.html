@@ -3,38 +3,54 @@
 {% block content %}
     <div class="dashboard-container">
         <div class="registration-billing-form">
-            <div class="row">
-                <div class="billing-form-pro">
-                    <form>
-                        <input type="hidden" value="{{ csrf_token }}">
-                        {% for field in form %}
-                            {% if field.name == 'video' %}
-                                <div class="form-group">
-                                    <div class="hidden">
-                                        {{ form.video }}
-                                        <input type="file" id="hidden_image_upload"/>
-                                    </div>
-                                    <div id="upload_image_button">Upload video</div>
-                                    <div id="upload_image_errors"></div>
-                                    <div id="image_preview"></div>
-                                </div>
-                            {% else %}
-                                <div class="form-group">
-                                    <label for="{{ field.name }}" class="col-form-label">{{ field.label }}:</label>
-                                    {{ field }}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </form>
+            <form>
+                <input type="hidden" value="{{ csrf_token }}">
+                <div class="row">
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="{{ form.nombre.name }}" class="col-form-label">{{ form.nombre.label }}:</label>
+                            {{ form.nombre }}
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="{{ form.apellido.name }}"
+                                   class="col-form-label">{{ form.apellido.label }}:</label>
+                            {{ form.apellido }}
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="{{ form.email.name }}" class="col-form-label">{{ form.email.label }}:</label>
+                            {{ form.email }}
+                        </div>
+                    </div>
                 </div>
-            </div><!-- close .row -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="{{ form.mensaje.name }}"
+                                   class="col-form-label">{{ form.mensaje.label }}:</label>
+                            {{ form.mensaje }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="{{ form.video.name }}" class="col-form-label">{{ form.video.label }}:</label>
+                            {{ form.video }}
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}
 
 {% block scripts %}
     <script type="application/javascript">
-
+        var csrf_token = "{{ csrf_token }}";
     </script>
 {% endblock %}
 
