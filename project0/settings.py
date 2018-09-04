@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'eventos',
     'concursos',
-    'plataforma_concurso'
+    'plataforma_concurso',
+    'proceso_conversion'
 ]
 
 MIDDLEWARE = [

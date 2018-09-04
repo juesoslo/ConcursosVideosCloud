@@ -31,6 +31,7 @@ class EstadosVideoOpciones(Enum):  # A subclass of Enum
 
 class VideoRelacionado(models.Model):
     video = models.FileField(upload_to='videos/')
+    video_convertido = models.FileField(upload_to='videos/', default=None, blank=True, null=True)
     estado = models.CharField(
         max_length=10,
         choices=[(tag.name, tag.value) for tag in EstadosVideoOpciones],

@@ -24,5 +24,6 @@ urlpatterns = [
     path('', include('eventos.urls')), #No borrar, para que funcione el Login
     path('concursos/', include('concursos.urls')),
     path('platform/', include('plataforma_concurso.urls')),
+    path('conversion/', include('proceso_conversion.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
