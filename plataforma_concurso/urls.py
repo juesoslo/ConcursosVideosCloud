@@ -14,4 +14,9 @@ urlpatterns = [
     path('videos/', views.videos, name='platform_videos'),
     path('nuevo/', views.formulario_participante, name='platform_form'),
     path('api/videos_relacionados/', include(ajax_router.urls)),
+<<<<<<< HEAD
 ]
+=======
+    path('upload', views.video_upload, name='platform_upload'),
+]
+>>>>>>> andres
