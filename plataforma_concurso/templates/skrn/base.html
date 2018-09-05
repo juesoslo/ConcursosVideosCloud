@@ -15,36 +15,76 @@
     <link rel="stylesheet" href='{% static  "/icons/Iconsmind__Ultimate_Pack/Line%20icons/styles.min.css" %}'>
     <!-- iconsmind.com Icons -->
 
-    <title>Plataforma videos</title>
+    <title>SmartTools - Concurso</title>
 
     {% block styles %}
     {% endblock %}
 </head>
 <body>
+{% url 'platform_concurso' as platform_concurso %}
 {% url 'platform_index' as platform_index %}
-{% url 'platform_videos' as platform_videos %}
+{% url 'platform_concurso|addstr:"videos/"' as platform_videos %}
 {% url 'platform_form' as platform_form %}
 
 <div id="sidebar-bg">
+    <header id="videohead-pro" class="sticky-header">
+        <div id="video-logo-background"><a href="dashboard-home.html"><img
+                src="/static/images/logo-video-layout.png" alt="Logo"></a></div>
+
+        <div id="mobile-bars-icon-pro" class="noselect"><i class="fas fa-bars"></i></div>
+
+        <div class="clearfix"></div>
+
+        <nav id="mobile-navigation-pro">
+
+            <ul id="mobile-menu-pro">
+              <li class="normal-item-pro {% ifequal request.path platform_index %}current-menu-item{% endifequal %}">
+                  <a href="{{ platform_concurso }}">
+                      <span class="icon-Old-TV"></span>
+                      Concurso
+                  </a>
+              </li>
+              <li class="normal-item-pro {% ifequal request.path platform_videos %}current-menu-item{% endifequal %}">
+                  <a href="{{ platform_videos }}">
+                      <span class="icon-Movie"></span>
+                      Videos
+                  </a>
+              </li>
+              <li class="normal-item-pro {% ifequal request.path platform_form %}current-menu-item{% endifequal %}">
+                  <a href="{{ platform_form }}">
+                      <span class="icon-Upload-2"></span>
+                      Carga tu video
+                  </a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+
+            <div id="search-mobile-nav-pro">
+                <input type="text" placeholder="Search for Movies or TV Series" aria-label="Search">
+            </div>
+
+        </nav>
+
+    </header>
     <nav id="sidebar-nav" style="padding-top: 5px"><!-- Add class="sticky-sidebar-js" for auto-height sidebar -->
         <ul id="vertical-sidebar-nav" class="sf-menu">
             <div id="video-logo-background"><a href="{{ platform_index }}" style="padding-top: 5px"><img
-                    src="../../static/images/logo-video-layout.png" alt="Logo"></a></div>
+                    src="/static/images/logo-video-layout.png" alt="Logo"></a></div>
 
             <li class="normal-item-pro {% ifequal request.path platform_index %}current-menu-item{% endifequal %}">
-                <a href="{{ platform_index }}">
+                <a href="{{ platform_concurso }}">
                     <span class="icon-Old-TV"></span>
                     Concurso
                 </a>
             </li>
             <li class="normal-item-pro {% ifequal request.path platform_videos %}current-menu-item{% endifequal %}">
-                <a href="{{ platform_videos }}">
+                <a href="videos/">
                     <span class="icon-Movie"></span>
                     Videos
                 </a>
             </li>
             <li class="normal-item-pro {% ifequal request.path platform_form %}current-menu-item{% endifequal %}">
-                <a href="{{ platform_form }}">
+                <a href="nuevo">
                     <span class="icon-Upload-2"></span>
                     Carga tu video
                 </a>
@@ -84,6 +124,4 @@
 
 
 </body>
-
-<!-- Mirrored from progression-studios.com/skrn/dashboard-home.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 26 Aug 2018 13:36:07 GMT -->
 </html>

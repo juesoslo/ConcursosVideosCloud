@@ -1,27 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalle de concurso</title>
-</head>
-<body>
-<h1>Detalle de Concurso</h1>
-<a href="{% url 'platform_form' %}">Sube tu video</a>
-
-<script type="application/javascript">
-    var csrf_token = "{{ csrf_token }}";
-</script>
-</body>
-</html>
-=======
 {% extends 'skrn/base.html' %}
 
 {% block content %}
+    <h4>{{ my_url }}</h4>
+    <h3>{{ concurso }}</h3>
     <div class="flexslider progression-studios-dashboard-slider">
         <ul class="slides">
             <li class="progression_studios_animate_left">
                 <div class="progression-studios-slider-dashboard-image-background"
-                     style="background-image:url(../../static/images/demo/dashboard-slide-1.jpg);">
+                     style="background-image:url(/static/images/demo/dashboard-slide-1.jpg);">
                     <div class="progression-studios-slider-display-table">
                         <div class="progression-studios-slider-vertical-align">
 
@@ -86,17 +72,17 @@
 
                                         <h5>Starring</h5>
                                         <ul class="progression-studios-staring-slider">
-                                            <li><a href="#!"><img src="../../static/images/demo/user-1.jpg"
+                                            <li><a href="#!"><img src="/static/images/demo/user-1.jpg"
                                                                   alt="Starring"></a></li>
-                                            <li><a href="#!"><img src="../../static/images/demo/user-2.jpg"
+                                            <li><a href="#!"><img src="/static/images/demo/user-2.jpg"
                                                                   alt="Starring"></a></li>
-                                            <li><a href="#!"><img src="../../static/images/demo/user-3.jpg"
+                                            <li><a href="#!"><img src="/static/images/demo/user-3.jpg"
                                                                   alt="Starring"></a></li>
-                                            <li><a href="#!"><img src="../../static/images/demo/user-4.jpg"
+                                            <li><a href="#!"><img src="/static/images/demo/user-4.jpg"
                                                                   alt="Starring"></a></li>
-                                            <li><a href="#!"><img src="../../static/images/demo/user-5.jpg"
+                                            <li><a href="#!"><img src="/static/images/demo/user-5.jpg"
                                                                   alt="Starring"></a></li>
-                                            <li><a href="#!"><img src="../../static/images/demo/user-6.jpg"
+                                            <li><a href="#!"><img src="/static/images/demo/user-6.jpg"
                                                                   alt="Starring"></a></li>
                                         </ul>
 
@@ -177,17 +163,17 @@
 
                                         <h5 class="light-fonts-pro">Starring</h5>
                                         <ul class="progression-studios-staring-slider">
-                                            <li><a href="#!"><img src="../../static/images/demo/user-1.jpg"
+                                            <li><a href="#!"><img src="/static/images/demo/user-1.jpg"
                                                                   alt="Starring"></a></li>
-                                            <li><a href="#!"><img src="../../static/images/demo/user-2.jpg"
+                                            <li><a href="#!"><img src="/static/images/demo/user-2.jpg"
                                                                   alt="Starring"></a></li>
-                                            <li><a href="#!"><img src="../../static/images/demo/user-3.jpg"
+                                            <li><a href="#!"><img src="/static/images/demo/user-3.jpg"
                                                                   alt="Starring"></a></li>
-                                            <li><a href="#!"><img src="../../static/images/demo/user-4.jpg"
+                                            <li><a href="#!"><img src="/static/images/demo/user-4.jpg"
                                                                   alt="Starring"></a></li>
-                                            <li><a href="#!"><img src="../../static/images/demo/user-5.jpg"
+                                            <li><a href="#!"><img src="/static/images/demo/user-5.jpg"
                                                                   alt="Starring"></a></li>
-                                            <li><a href="#!"><img src="../../static/images/demo/user-6.jpg"
+                                            <li><a href="#!"><img src="/static/images/demo/user-6.jpg"
                                                                   alt="Starring"></a></li>
                                         </ul>
 

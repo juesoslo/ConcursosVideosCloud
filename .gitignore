@@ -103,3 +103,9 @@ venv.bak/
 # mypy
 .mypy_cache/
 .idea/
+
+# mydatabase
+mydatabase
+
+# videos
+videos/
