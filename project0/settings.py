@@ -172,6 +172,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'eventos/static'),
     os.path.join(BASE_DIR, 'concursos/static'),
     os.path.join(BASE_DIR, 'plataforma_concurso/static'),
+    os.path.join(BASE_DIR, 'proceso_conversion/static'),
 )
 
 # Sessions
