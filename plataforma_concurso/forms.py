@@ -1,4 +1,4 @@
-from django.forms import ModelForm, FileField, FileInput, ValidationError
+from django.forms import ModelForm, FileField, FileInput, ValidationError, MultiValueField, Textarea
 
 from concursos.models import VideoRelacionado, ParticipanteVideo, Participante
 
@@ -13,6 +13,9 @@ class ParticipanteForm(ModelForm):
     class Meta:
         model = Participante
         fields = ('nombre', 'apellido', 'email', 'mensaje')
+        widgets = {
+            'mensaje': Textarea(attrs={'rows': 4, 'cols': 15}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(ParticipanteForm, self).__init__(*args, **kwargs)
