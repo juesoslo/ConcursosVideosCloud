@@ -35,7 +35,7 @@ class VideoRelacionado(models.Model):
     estado = models.CharField(
         max_length=100,
         choices=[(tag.value, tag.name) for tag in EstadosVideoOpciones],
-        default=EstadosVideoOpciones.TODO
+        default=EstadosVideoOpciones.TODO.value
     )
 
     class Meta:
@@ -43,8 +43,8 @@ class VideoRelacionado(models.Model):
         verbose_name_plural = 'videos relacionados'
         db_table = 'video_relacionado'
 
-    def __unicode__(self):
-        return self.video.url
+    def __str__(self):
+        return self.estado +' - Original: '+ str(self.video) +' - Convertido: '+ str(self.video_convertido)
 
 
 class Participante(models.Model):
