@@ -1,5 +1,5 @@
-<!doctype html>
 {% load static %}
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -18,6 +18,7 @@
     <title>SmartTools - Concurso</title>
 
     {% block styles %}
+
     {% endblock %}
 </head>
 <body>
@@ -28,30 +29,40 @@
 
 <div id="sidebar-bg">
     <header id="videohead-pro" class="sticky-header">
-        <div id="video-logo-background"><a href="dashboard-home.html"><img
+        <div id="video-logo-background"><a href="/"><img
                 src="/static/images/logo-video-layout.png" alt="Logo"></a></div>
 
         <div id="mobile-bars-icon-pro" class="noselect"><i class="fas fa-bars"></i></div>
+
+        {% block toppage %}
+
+        <div class="text-center mx-auto box h-100 d-flex justify-content-center flex-column">
+          {% for x in concurso %}
+            <h1>{{ x.nombre }}</h1>
+            {% endfor %}
+        </div>
+
+        {% endblock %}
 
         <div class="clearfix"></div>
 
         <nav id="mobile-navigation-pro">
 
             <ul id="mobile-menu-pro">
-              <li class="normal-item-pro {% ifequal request.path platform_index %}current-menu-item{% endifequal %}">
-                  <a href="{{ platform_concurso }}">
+              <li class="normal-item-pro {% ifequal request.path my_url %}current-menu-item{% endifequal %}">
+                  <a href="{{ my_url }}">
                       <span class="icon-Old-TV"></span>
                       Concurso
                   </a>
               </li>
-              <li class="normal-item-pro {% ifequal request.path platform_videos %}current-menu-item{% endifequal %}">
-                  <a href="{{ platform_videos }}">
+              <li class="normal-item-pro {% ifequal request.path my_url|add:"videos/" %}current-menu-item{% endifequal %}">
+                  <a href="{{ my_url|add:"videos"}}">
                       <span class="icon-Movie"></span>
                       Videos
                   </a>
               </li>
-              <li class="normal-item-pro {% ifequal request.path platform_form %}current-menu-item{% endifequal %}">
-                  <a href="{{ platform_form }}">
+              <li class="normal-item-pro {% ifequal request.path my_url|add:"nuevo/" %}current-menu-item{% endifequal %}">
+                  <a href="{{ my_url|add:"nuevo"}}">
                       <span class="icon-Upload-2"></span>
                       Carga tu video
                   </a>
@@ -71,20 +82,20 @@
             <div id="video-logo-background"><a href="{{ platform_index }}" style="padding-top: 5px"><img
                     src="/static/images/logo-video-layout.png" alt="Logo"></a></div>
 
-            <li class="normal-item-pro {% ifequal request.path platform_index %}current-menu-item{% endifequal %}">
-                <a href="{{ platform_concurso }}">
+            <li class="normal-item-pro {% ifequal request.path my_url %}current-menu-item{% endifequal %}">
+                <a href="{{ my_url }}">
                     <span class="icon-Old-TV"></span>
                     Concurso
                 </a>
             </li>
-            <li class="normal-item-pro {% ifequal request.path platform_videos %}current-menu-item{% endifequal %}">
-                <a href="videos/">
+            <li class="normal-item-pro {% ifequal request.path my_url|add:"videos/" %}current-menu-item{% endifequal %}">
+                <a href="{{ my_url|add:"videos"}}">
                     <span class="icon-Movie"></span>
                     Videos
                 </a>
             </li>
-            <li class="normal-item-pro {% ifequal request.path platform_form %}current-menu-item{% endifequal %}">
-                <a href="nuevo">
+            <li class="normal-item-pro {% ifequal request.path my_url|add:"nuevo/" %}current-menu-item{% endifequal %}">
+                <a href="{{ my_url|add:"nuevo"}}">
                     <span class="icon-Upload-2"></span>
                     Carga tu video
                 </a>
