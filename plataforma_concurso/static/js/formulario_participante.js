@@ -1,43 +1,54 @@
 $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:
-    var url = upload_file_url,
-        uploadButton = $('<button/>')
-            .addClass('btn btn-primary')
-            .prop('disabled', true)
-            .text('Processing...')
-            .on('click', function () {
-                var $this = $(this),
-                    data = $this.data();
-                $this
-                    .off('click')
-                    .text('Abort')
-                    .on('click', function () {
-                        $this.remove();
-                        data.abort();
-                    });
-                data.submit().always(function () {
+
+    var uploadButton = $('<button/>')
+        .addClass('btn btn-primary')
+        .css(
+            'width', '100%'
+        )
+        .prop('disabled', true)
+        .text('Processing...')
+        .on('click', function () {
+            var $this = $(this),
+                data = $this.data();
+            $this
+                .off('click')
+                .text('Abort')
+                .on('click', function () {
                     $this.remove();
+                    data.abort();
                 });
+            data.submit().always(function () {
+                $this.remove();
             });
-    $('[name="video"]').fileupload({
-        url: url,
-        dataType: 'json',
-        autoUpload: false,
-        acceptFileTypes: /^video\/(.+)$/i
-    }).on('fileuploadadd', function (e, data) {
-        $(window).bind('beforeunload', function () {
-            return 'Are you sure you want to leave?';
         });
 
+    $('[name="video"]').fileupload({
+        url: upload_file_url,
+        formData: [
+            {name: "uid", value: uuid},
+            {name: "csrfmiddlewaretoken", value: csrf_token}
+        ],
+        dataType: 'json',
+        autoUpload: false,
+        uploadTemplateId: null,
+        downloadTemplateId: null,
+        maxNumberOfFiles: 1,
+        acceptFileTypes: /^video\/(.+)$/i,
+    }).on('fileuploadadd', function (e, data) {
+        $(window).bind('beforeunload', function () {
+            return 'Estas seguro de abandonar?';
+        });
+        $("#files").empty();
+        $('#progress .progress-bar').css(
+            'width', '0%'
+        );
         data.context = $('<div/>').appendTo('#files');
         $.each(data.files, function (index, file) {
-            var node = $('<p/>')
-                .append($('<span/>').text(file.name));
+            var node = $('<p/>').append($('<span/>').text(file.name));
             if (!index) {
-                node
-                    .append('<br>')
-                    .append(uploadButton.clone(true).data(data));
+                node.append('<br>').append(uploadButton.clone(true).data(data));
             }
             node.appendTo(data.context);
         });
@@ -57,7 +68,7 @@ $(function () {
         }
         if (index + 1 === data.files.length) {
             data.context.find('button')
-                .text('Upload')
+                .text('Cargar')
                 .prop('disabled', !!data.files.error);
         }
     }).on('fileuploadprogressall', function (e, data) {

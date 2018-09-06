@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-12">
                         <label for="{{ form.video.name }}"
-                                   class="col-form-label">{{ form.video.label }}:</label>
+                               class="col-form-label">{{ form.video.label }}:</label>
 
                         <!-- The file input field used as target for the file upload widget -->
                         {{ form.video }}
@@ -64,6 +64,7 @@
 {% block scripts %}
     <script type="application/javascript">
         var csrf_token = "{{ csrf_token }}";
+        var uuid = "{{ uid }}";
         var upload_file_url = "{% url 'platform_upload' %}";
     </script>
 
@@ -98,7 +99,7 @@
     <!-- blueimp Gallery styles -->
     <link rel="stylesheet" href="https://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
     <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
-    <link rel="stylesheet" href="{% static "css/jquery.fileupload.css" %}">
+    <link rel="stylesheet" href="{% static "vendor/jquery-file-upload/css/jquery.fileupload.css" %}">
     <!-- CSS adjustments for browsers with JavaScript disabled -->
     <noscript>
         <link rel="stylesheet" href="{% static "vendor/jquery-file-upload/css/jquery.fileupload-noscript.css" %}">

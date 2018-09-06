@@ -23,7 +23,7 @@ def video_upload(request):
             return HttpResponseBadRequest('¡Debe tener archivos!')
 
         # get the file
-        file = request.FILES[u'files']
+        file = request.FILES[u'video']
 
         # creates the new document
         vr = VideoRelacionado()
@@ -59,4 +59,4 @@ def video_upload(request):
             response['Content-Disposition'] = 'inline; filename=files.json'
             return HttpResponse(response, mimetype='application/json')
         else:
-            return HttpResponse(json.dumps({"success": False, "response":"Formulario Invalido", 'errors': formulario.errors}), content_type="application/json", status=500)
+            return HttpResponse(json.dumps({"success": False, "response": "Formulario Invalido", 'errors': formulario.errors}), content_type="application/json", status=500)
