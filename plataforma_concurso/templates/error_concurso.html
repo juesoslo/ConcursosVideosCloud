@@ -1,0 +1,74 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href='{% static "/css/bootstrap.min.css" %}'>
+    <link rel="stylesheet" href='{% static "/css/style_skrn.css" %}'>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:400,700%7CMontserrat:300,400,600,700">
+
+    <link rel="stylesheet" href='{% static "/icons/fontawesome/css/fontawesome-all.min.css" %}'>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href='{% static  "/icons/Iconsmind__Ultimate_Pack/Line%20icons/styles.min.css" %}'>
+    <!-- iconsmind.com Icons -->
+
+    <title>SmartTools - Concurso</title>
+
+    {% block styles %}
+    {% endblock %}
+</head>
+<body>
+{% url 'platform_concurso' as platform_concurso %}
+{% url 'platform_index' as platform_index %}
+{% url 'platform_concurso|addstr:"videos/"' as platform_videos %}
+{% url 'platform_form' as platform_form %}
+
+<div id="">
+
+
+    <main id="col-ma">
+      <div class="text-center mx-auto box h-100 d-flex justify-content-center flex-column">
+      </br>
+      </br>
+        {% block content %}
+        <a href="/"><img
+                src="/static/images/logo-video-layout.png" alt="Logo"></a>
+        </br>
+        </br>
+        </br>
+        </br>
+        <h1>¡La URL del concurso no es válida, solicita al administrador la URL correcta!</h1>
+        {% endblock %}
+      </div>
+    </main>
+
+
+</div><!-- close #sidebar-bg-->
+
+<script>
+    var static_url = '{% static "" %}'
+</script>
+
+<!-- Required Framework JavaScript -->
+<script src='{% static "js/libs/jquery-3.3.1.min.js" %}'></script><!-- jQuery -->
+<script src='{% static "js/libs/popper.min.js" %}' defer></script><!-- Bootstrap Popper/Extras JS -->
+<script src='{% static "js/libs/bootstrap.min.js" %}' defer></script><!-- Bootstrap Main JS -->
+<!-- All JavaScript in Footer -->
+
+<!-- Additional Plugins and JavaScript -->
+<script src='{% static "js/navigation.js" %}' defer></script><!-- Header Navigation JS Plugin -->
+<script src='{% static "js/jquery.flexslider-min.js" %}' defer></script><!-- FlexSlider JS Plugin -->
+<script src='{% static "js/jquery-asRange.min.js" %}' defer></script><!-- Range Slider JS Plugin -->
+<script src='{% static "js/circle-progress.min.js" %}' defer></script><!-- Circle Progress JS Plugin -->
+<script src='{% static "js/afterglow.min.js" %}' defer></script><!-- Video Player JS Plugin -->
+<script src='{% static "js/script.js" %}' defer></script><!-- Custom Document Ready JS -->
+<script src='{% static "js/script-dashboard.js" %}' defer></script><!-- Custom Document Ready for Dashboard Only JS -->
+{% block scripts %}
+{% endblock %}
+
+
+</body>
+</html>
