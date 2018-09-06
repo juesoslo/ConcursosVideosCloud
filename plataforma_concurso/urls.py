@@ -9,9 +9,9 @@ ajax_router.register(r'', RelatedImageAJAXView)
 
 urlpatterns = [
     path('', views.index, name='platform_index'),
-    re_path(r'^concurso/(?P<idconcurso>[\w]+)/$', views.concurso, name='platform_concurso'),
-    re_path(r'^concurso/(?P<idconcurso>[\w]+)/videos/$', views.concurso_videos, name='platform_concurso1232'),
-    re_path(r'^concurso/(?P<idconcurso>[\w]+)/nuevo/$', views.concurso_participante, name='platform_form_n'),
+    re_path(r'^(?P<idconcurso>[\w]+)/$', views.index, name='platform_index'),
+    re_path(r'^(?P<idconcurso>[\w]+)/videos/$', views.concurso_videos, name='platform_upload'),
+    re_path(r'^(?P<idconcurso>[\w]+)/nuevo/$', views.concurso_participante, name='platform_form'),
     path('videos/', views.videos, name='platform_videos'),
     path('nuevo/', views.formulario_participante, name='platform_form'),
     path('api/videos_relacionados/', include(ajax_router.urls)),
