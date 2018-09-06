@@ -250,12 +250,15 @@ def enviarCorreo(video, estadoConversion ):
 			if estadoConversion == EstadosVideoOpciones.DONE.value:
 				mensaje = '. El video ya ha sido publicado en la página del concurso.'
 
-			send_mail(
-				'Conversión de video terminada: ' +estadoConversion,
-				'El proceso de conversión de su video ha terminado con estado: ' +estadoConversion+ mensaje,
-				'Smartools.com <no-reply@smartools.com>',
-				[destinatario],
-				fail_silently=False,
-			)
+			try:
+				send_mail(
+					'Conversión de video terminada: ' +estadoConversion,
+					'El proceso de conversión de su video ha terminado con estado: ' +estadoConversion+ mensaje,
+					'Smartools.com <no-reply@smartools.com>',
+					[destinatario],
+					fail_silently=False,
+				)
+			except OSError as e:
+				pass
 
 	return True

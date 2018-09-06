@@ -55,16 +55,27 @@
         </div><!-- close .row -->
 
 
-
-
-        <ul class="page-numbers">
-            <li><a class="previous page-numbers" href="#!"><i class="fas fa-chevron-left"></i></a></li>
-            <li><span class="page-numbers current">1</span></li>
-            <li><a class="page-numbers" href="#!">2</a></li>
-            <li><a class="page-numbers" href="#!">3</a></li>
-            <li><a class="page-numbers" href="#!">4</a></li>
-            <li><a class="next page-numbers" href="#!"><i class="fas fa-chevron-right"></i></a></li>
-        </ul>
+        {% if videos.has_other_pages %}
+          <ul class="page-numbers">
+            {% if users.has_previous %}
+              <li><a class="previous page-numbers" href="?page={{ videos.previous_page_number }}"><i class="fas fa-chevron-left"></i></a></li>
+            {% else %}
+              <span><i class="fas fa-chevron-left"></i></span>
+            {% endif %}
+            {% for i in videos.paginator.page_range %}
+              {% if videos.number == i %}
+                <li><span class="page-numbers current">{{ i }}</span></li>
+              {% else %}
+                <li><a class="page-numbers" href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% if videos.has_next %}
+              <li><a class="next page-numbers" href="?page={{ videos.next_page_number }}"><i class="fas fa-chevron-right"></i></a></li>
+            {% else %}
+              <span><i class="fas fa-chevron-right"></i></span>
+            {% endif %}
+          </ul>
+        {% endif %}
 
 
     </div><!-- close .dashboard-container -->

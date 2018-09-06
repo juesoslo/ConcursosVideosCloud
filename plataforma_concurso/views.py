@@ -3,8 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseBadRequest
 import json
 from django.core.files.uploadedfile import UploadedFile
-
-# Create your views here.
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from concursos.models import Concurso, VideoRelacionado, Participante, ParticipanteVideo, EstadosVideoOpciones
 from plataforma_concurso.forms import ParticipanteForm
 
@@ -61,6 +60,16 @@ def videos(request, idconcurso):
                 temp['video_original'] = video_original
                 temp['video_convertido'] = video_convertido
                 videos.append(temp)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(videos, 20)
+
+    try:
+        videos = paginator.page(page)
+    except PageNotAnInteger:
+        videos = paginator.page(1)
+    except EmptyPage:
+        videos = paginator.page(paginator.num_pages)
 
     context = {
         "my_url": my_url,
