@@ -36,11 +36,13 @@ def get_file_path(instance, filename):
     return makedirs(os.path.join('videos', str(instance.concurso.id), filename))
 
 def get_file_converted_path(instance, filename):
-    if(filename!=None):
-        ext = filename.split('.')[-1]
-        filename = "%s.%s" % (uuid.uuid4(), ext)
-        return makedirs(os.path.join('videos', str(instance.concurso.id), 'convertidos', filename))
-    return filename
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (uuid.uuid4(), ext)
+
+    if(filename==None):
+        return os.path.join('videos', str(instance.concurso.id), 'convertidos', filename)
+        
+    return makedirs(os.path.join('videos', str(instance.concurso.id), 'convertidos', filename))
 
 def makedirs(path):
     try:
