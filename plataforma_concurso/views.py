@@ -43,7 +43,7 @@ def videos(request, idconcurso):
         video = ParticipanteVideo.objects.filter(participante_id=x.id)
         
         for vid in video:
-            conv = VideoRelacionado.objects.filter(id=vid.id, estado="Procesado")
+            conv = VideoRelacionado.objects.filter(id=vid.video.id, estado=EstadosVideoOpciones.DONE.value)
             for t in conv:
                 temp = {}
                 partic_id = x.id

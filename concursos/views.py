@@ -71,7 +71,7 @@ def get_concurso(request):
                 nombre_concurso = x.concurso
 
                 for vid in video:
-                    conv = VideoRelacionado.objects.filter(id = vid.id)
+                    conv = VideoRelacionado.objects.filter(id = vid.video.id)
                     for t in conv:
                         temp ={}
                         partic_create = x.created_at
