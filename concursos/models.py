@@ -57,7 +57,7 @@ class VideoRelacionado(models.Model):
         db_table = 'video_relacionado'
 
     def __str__(self):
-        return self.estado +' - Original: '+ str(self.video) +' - Convertido: '+ str(self.video_convertido)
+        return str(self.id) + ' - '+ self.estado +' - Original: '+ str(self.video) +' - Convertido: '+ str(self.video_convertido)
 
 class Participante(models.Model):
     nombre = models.CharField(max_length=255)  # el nombre del participante
@@ -79,3 +79,6 @@ class Participante(models.Model):
 class ParticipanteVideo(models.Model):
     video = models.ForeignKey(VideoRelacionado, on_delete=models.PROTECT)
     participante = models.ForeignKey(Participante, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return str(self.id) + ' - Participante: '+ str(self.participante) +' - Video: '+ str(self.video)

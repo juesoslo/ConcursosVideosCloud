@@ -181,3 +181,10 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR, '' )
 MEDIA_URL = '/media/'
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'organicocooperativa@gmail.com'
+EMAIL_HOST_PASSWORD = 'organico123456'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
