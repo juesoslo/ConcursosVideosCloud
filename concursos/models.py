@@ -1,6 +1,7 @@
 from enum import Enum
 from django.db import models
-
+import uuid
+import os
 
 # Create your models here
 class Concurso(models.Model):
@@ -29,14 +30,26 @@ class EstadosVideoOpciones(Enum):  # A subclass of Enum
     ERROR = "Error al procesar"
 
 
+def get_file_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (uuid.uuid4(), ext)
+    return os.path.join('videos', instance.concurso.id, 'convertidos', filename)
+
+def get_file_converted_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (uuid.uuid4(), ext)
+    return os.path.join('videos', instance.concurso.id, 'convertidos', filename)
+
 class VideoRelacionado(models.Model):
-    video = models.FileField(upload_to='videos/')
-    video_convertido = models.FileField(upload_to='videos/convertidos/', default=None, blank=True, null=True)
+    video = models.FileField(upload_to=get_file_path)
+    video_convertido = models.FileField(upload_to=get_file_converted_path, default=None, blank=True, null=True)
     estado = models.CharField(
         max_length=100,
         choices=[(tag.value, tag.name) for tag in EstadosVideoOpciones],
         default=EstadosVideoOpciones.TODO.value
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    concurso = models.ForeignKey(Concurso, on_delete=models.PROTECT, related_name='videos')
 
     class Meta:
         verbose_name = 'video relacionado'
@@ -45,7 +58,6 @@ class VideoRelacionado(models.Model):
 
     def __str__(self):
         return self.estado +' - Original: '+ str(self.video) +' - Convertido: '+ str(self.video_convertido)
-
 
 class Participante(models.Model):
     nombre = models.CharField(max_length=255)  # el nombre del participante

@@ -2,15 +2,12 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseBadRequest
 import json
-
+from django.core.files.uploadedfile import UploadedFile
 
 # Create your views here.
 from concursos.models import Concurso, VideoRelacionado, Participante, ParticipanteVideo
 from plataforma_concurso.forms import ParticipanteForm
 
-
-def index(request):
-    return render(request, 'detalle_concurso.html')
 
 def videos(request):
     return render(request, 'videos_concurso.html')
@@ -19,27 +16,25 @@ def formulario_participante(request):
     form = ParticipanteForm()
     return render(request, 'formulario_participante.html', {'form': form})
 
-def concurso(request, idconcurso):
-    my_url = reverse(concurso, args=(idconcurso,))
+def index(request, idconcurso):
+    my_url = reverse(index, args=(idconcurso,))
     url_concurso = idconcurso
-
-    concursos = []
-
-    concursos = Concurso.objects.filter(url = url_concurso )[:1]
+    concursos = Concurso.objects.filter(url=url_concurso)[:1]
 
     context = {
         "my_url": my_url,
         "url_concurso": url_concurso,
-        "concurso": concursos
+        "concurso": concursos,
     };
 
     if len(concursos) > 0:
+        context["id_concurso"] = concursos[0]
         return render(request, 'detalle_concurso.html', context)
     else:
         return render(request, 'error_concurso.html', context)
 
 def concurso_videos(request, idconcurso):
-    my_url = reverse(concurso, args=(idconcurso,))
+    my_url = reverse(index, args=(idconcurso,))
     url_concurso = idconcurso
 
     concursos = []
@@ -51,7 +46,7 @@ def concurso_videos(request, idconcurso):
         video = ParticipanteVideo.objects.filter(participante_id = x.id)
         print(video)
         for vid in video:
-            conv = VideoRelacionado.objects.filter(id = vid.id)
+            conv = VideoRelacionado.objects.filter(id=vid.id)
             for t in conv:
                 temp ={}
                 part = x.id
@@ -69,7 +64,6 @@ def concurso_videos(request, idconcurso):
         "url_concurso": url_concurso,
         "participantes": concursos,
         "videos": videos
-
     };
 
     if len(concursos) > 0:
@@ -99,33 +93,23 @@ def video_upload(request):
         vr.video = file
         vr.save()
 
-        #Se obtienen los datos del archivo creado
-        wrapped_file = UploadedFile(vD.archivo)
+        # Se obtienen los datos del archivo creado
+        wrapped_file = UploadedFile(vr.video)
         filename = wrapped_file.name
         file_size = wrapped_file.file.size
 
-        documentoCrear = Documento()
-        formulario = DocumentoForm(request.POST, instance=documentoCrear)
+        files = []
+        files.append({
+            "name": filename,
+            "size": file_size,
+            "url": vr.video.url,
+        })
 
-        if formulario.is_valid():
-            documentoCrear.versionActual= vD
-            formulario.save()
-            documentoCrear.versiones.add(vD)
-            documentoCrear.save()
-             #generating json response array
-            files = []
-            files.append({
-                "name":filename,
-                "size":file_size,
-                "url":vD.archivo.url,
-                "thumbnail_url":vD.archivo.url,
-                "delete_url": '',
-                "delete_type":"POST",
-                #'type': mimetypes.guess_type(file.path)[0] or 'image/png',
-            })
-            data = {'files': files}
-            response = JSONResponse(data, mimetype=response_mimetype(request))
-            response['Content-Disposition'] = 'inline; filename=files.json'
-            return HttpResponse(response, mimetype='application/json')
-        else:
-            return HttpResponse(json.dumps({"success": False, "response": "Formulario Invalido", 'errors': formulario.errors}), content_type="application/json", status=500)
+        return HttpResponse(
+            json.dumps({"success": True, "response": "Cargado con exito", 'errors': [], 'files': files,
+                        'Content-Disposition': 'inline; filename=files.json'}),
+            content_type="application/json", status=200)
+    else:
+        return HttpResponse(
+            json.dumps({"success": False, "response": "Metodo no permitido", 'errors': ["Metodo no permitido"]}),
+            content_type="application/json", status=500)
