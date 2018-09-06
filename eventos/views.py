@@ -27,7 +27,7 @@ def login_view(request):
             # Correct password, and the user is marked "active"
             auth.login(request, user)
             # Verify variable context
-            return HttpResponseRedirect('/account/loggedin')
+            return HttpResponseRedirect('/concursos')
 
         else:
             # Show an error page
