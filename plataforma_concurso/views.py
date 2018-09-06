@@ -9,50 +9,43 @@ from concursos.models import Concurso, VideoRelacionado, Participante, Participa
 from plataforma_concurso.forms import ParticipanteForm
 
 
-def videos(request):
-    return render(request, 'videos_concurso.html')
-
-def formulario_participante(request):
-    form = ParticipanteForm()
-    return render(request, 'formulario_participante.html', {'form': form})
-
 def index(request, idconcurso):
     my_url = reverse(index, args=(idconcurso,))
-    url_concurso = idconcurso
-    concursos = Concurso.objects.filter(url=url_concurso)[:1]
+    concursos = Concurso.objects.filter(url=idconcurso)[:1]
 
     context = {
         "my_url": my_url,
-        "url_concurso": url_concurso,
-        "concurso": concursos,
+        "url_concurso": idconcurso,
+        "concursos": concursos,
     };
 
     if len(concursos) > 0:
-        context["id_concurso"] = concursos[0]
+        context["id_concurso"] = concursos[0].id
         return render(request, 'detalle_concurso.html', context)
     else:
         return render(request, 'error_concurso.html', context)
 
-def concurso_videos(request, idconcurso):
+
+def videos(request, idconcurso):
     my_url = reverse(index, args=(idconcurso,))
     url_concurso = idconcurso
 
     concursos = []
     videos = []
 
-    concursos = Participante.objects.filter(concurso__url = url_concurso )
+    concursos = Participante.objects.filter(concurso__url=url_concurso)
 
     temp_conc = Concurso.objects.filter(url=idconcurso)
 
     nombre_concurso = temp_conc[0].nombre
 
     for x in concursos:
-        video = ParticipanteVideo.objects.filter(participante_id = x.id)
+        video = ParticipanteVideo.objects.filter(participante_id=x.id)
         print(video)
         for vid in video:
-            conv = VideoRelacionado.objects.filter(id=vid.id, estado ="Procesado")
+            conv = VideoRelacionado.objects.filter(id=vid.id, estado="Procesado")
             for t in conv:
-                temp ={}
+                temp = {}
                 partic_id = x.id
                 partic_nombre = x.nombre
                 partic_apellido = x.apellido
@@ -68,7 +61,7 @@ def concurso_videos(request, idconcurso):
                 temp['video_original'] = video_original
                 temp['video_convertido'] = video_convertido
                 videos.append(temp)
-                print("video: ",t.video)
+                print("video: ", t.video)
 
     print("Lista de videos ", videos)
     print("Lista de participantes ", concursos)
@@ -79,7 +72,8 @@ def concurso_videos(request, idconcurso):
         "concurso": nombre_concurso,
         "participantes": concursos,
         "videos": videos
-    };
+
+    }
 
     if len(concursos) > 0:
         print("concurso encontrado ", url_concurso, concursos)
@@ -88,12 +82,24 @@ def concurso_videos(request, idconcurso):
         print("concurso NO encontrado", url_concurso)
         return render(request, 'videos_concurso.html', context)
 
-def concurso_participante(request, idconcurso):
-    my_url = reverse(concurso, args=(idconcurso,))
-    tag = idconcurso
-    form = ParticipanteForm()
-    context = {"my_url": my_url, "concurso": tag, 'form': form};
-    return render(request, 'formulario_participante.html', context)
+
+def formulario_participante(request, idconcurso):
+    my_url = reverse(index, args=(idconcurso,))
+    concursos = Concurso.objects.filter(url=idconcurso)[:1]
+
+    context = {
+        "my_url": my_url,
+        "url_concurso": idconcurso,
+        "concursos": concursos,
+    };
+
+    if len(concursos) > 0:
+        context["id_concurso"] = concursos[0].id
+        context["form"] = ParticipanteForm()
+        return render(request, 'formulario_participante.html', context)
+    else:
+        return render(request, 'error_concurso.html', context)
+
 
 def video_upload(request):
     if request.method == 'POST':
@@ -103,9 +109,18 @@ def video_upload(request):
         # get the file
         file = request.FILES[u'video']
 
+        # get concurso
+        concurso_id = request.POST[u'concurso_id']
+        concursos = Concurso.objects.filter(pk=concurso_id)
+
+        if len(concursos) <= 0:
+            return HttpResponse(
+                json.dumps(
+                    {"success": False, "response": "Concurso no encontrado", 'errors': ["Concurso no encontrado"]}),
+                content_type="application/json", status=500)
+
         # creates the new document
-        vr = VideoRelacionado()
-        vr.video = file
+        vr = VideoRelacionado(video=file, concurso_id=int(concurso_id))
         vr.save()
 
         # Se obtienen los datos del archivo creado
@@ -119,6 +134,21 @@ def video_upload(request):
             "size": file_size,
             "url": vr.video.url,
         })
+
+        # se crea el participante
+        participante_nombre = request.POST[u'participante_nombre']
+        participante_apellido = request.POST[u'participante_apellido']
+        participante_email = request.POST[u'participante_email']
+        participante_mensaje = request.POST[u'participante_mensaje']
+
+        participante = Participante(nombre=participante_nombre, apellido=participante_apellido,
+                                    email=participante_email, mensaje=participante_mensaje,
+                                    concurso_id=int(concurso_id))
+        participante.save()
+
+        # se crea la relacion final
+        participanteVideo = ParticipanteVideo(video=vr, participante=participante)
+        participanteVideo.save()
 
         return HttpResponse(
             json.dumps({"success": True, "response": "Cargado con exito", 'errors': [], 'files': files,

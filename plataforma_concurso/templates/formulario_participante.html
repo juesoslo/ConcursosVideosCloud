@@ -3,7 +3,7 @@
 {% block content %}
     <div class="dashboard-container">
         <div class="registration-billing-form">
-            <form>
+            <form id="form_participante">
                 <input type="hidden" value="{{ csrf_token }}">
                 <div class="row">
                     <div class="col-md-4 col-sm-12">
@@ -65,6 +65,8 @@
     <script type="application/javascript">
         var csrf_token = "{{ csrf_token }}";
         var uuid = "{{ uid }}";
+        var base_concurso_url = "{{ my_url }}";
+        var concurso_id = "{{ id_concurso }}";
         var upload_file_url = "{% url 'platform_upload' %}";
     </script>
 
@@ -124,6 +126,10 @@
 
         .files p {
             text-align: center;
+        }
+
+        .error{
+            color: red;
         }
 
         /*[name="video"]{

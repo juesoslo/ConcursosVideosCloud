@@ -29,7 +29,6 @@ class ParticipanteForm(ModelForm):
     def clean(self):
         cleaned_data = self.cleaned_data
         file = cleaned_data.get("video")
-        file_exts = ('.avi', '.mp4', '.webm', '.mkv', '.flv',)
 
         if file is None:
             raise ValidationError('Seleccione archivo video ')
