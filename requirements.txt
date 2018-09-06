@@ -5,3 +5,4 @@ django-tools
 djangorestframework
 Pillow
 requests
+psycopg2
