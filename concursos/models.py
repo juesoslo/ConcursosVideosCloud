@@ -67,3 +67,6 @@ class Participante(models.Model):
 class ParticipanteVideo(models.Model):
     video = models.ForeignKey(VideoRelacionado, on_delete=models.PROTECT)
     participante = models.ForeignKey(Participante, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return str(self.id) + ' - Participante: '+ str(self.participante) +' - Video: '+ str(self.video)

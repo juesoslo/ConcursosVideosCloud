@@ -4,6 +4,7 @@ from django.conf import settings
 from concursos.models import VideoRelacionado, EstadosVideoOpciones
 from .models import Proceso, LogConversion
 from django.utils.crypto import get_random_string
+from django.core.mail import send_mail
 from datetime import datetime 
 import socket
 import subprocess
@@ -62,6 +63,11 @@ def reset_estados_videos():
 def convertir_video( video ):
 	registrar_log_conversion( video, 'Inicia el proceso de conversión' )
 
+	#Actualiza el estado del video a EN PROCESO
+	registrar_log_conversion( video, 'Se actualiza el estado del video a DOING' )
+	video.estado = EstadosVideoOpciones.DOING.value #El estado del video es DOING
+	video.save()
+
 	#La URL del Video original
 	video_original = str(video.video)
 	registrar_log_conversion( video, 'URL video original: '+video_original )
@@ -77,6 +83,9 @@ def convertir_video( video ):
 		video.video_convertido = video.video #El video convertido es el mismo video original
 		video.estado = EstadosVideoOpciones.DONE.value #El estado del video es DONE
 		video.save()
+
+		#Envía el correo notificando el procesamiento del video
+		enviarCorreo(video, EstadosVideoOpciones.DONE.value )
 
 		registrar_log_conversion( video, 'Termina el proceso de conversión' )
 		return True
@@ -97,6 +106,9 @@ def convertir_video( video ):
 			video.estado = EstadosVideoOpciones.DONE.value #El estado del video es DONE
 			video.save()
 
+			#Envía el correo notificando el procesamiento del video
+			enviarCorreo(video, EstadosVideoOpciones.DONE.value )
+
 			registrar_log_conversion( video, 'Termina el proceso de conversión' )
 			return True
 
@@ -104,6 +116,9 @@ def convertir_video( video ):
 			registrar_log_conversion( video, 'Se actualiza el estado del video a ERROR' )
 			video.estado = EstadosVideoOpciones.ERROR.value #El estado del video es DONE
 			video.save()
+
+			#Envía el correo notificando el procesamiento del video
+			enviarCorreo(video, EstadosVideoOpciones.ERROR.value )
 
 			registrar_log_conversion( video, 'Termina el proceso de conversión' )
 			return False
@@ -190,3 +205,23 @@ def registrar_log_conversion( video, mensaje ):
 	log.save()
 
 
+
+def enviarCorreo(video, estadoConversion ):
+	#Buscando el participante correspondiente al video
+	participantes  = ParticipanteVideo.objects.filter(video=video)
+
+	#si hay participantes con este video
+	for participante in participantes:
+		#Almacena el email del participante
+		destinatario = participante.email
+
+		if( destinatario and estadoConversion ):
+			send_mail(
+				'Conversión de video terminada: ' +estadoConversion,
+				'El proceso de conversión de su video ha terminado con estado: ' +estadoConversion,
+				'no-reply@smartools.com',
+				[destinatario],
+				fail_silently=False,
+			)
+
+	return True
