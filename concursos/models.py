@@ -44,7 +44,7 @@ class VideoRelacionado(models.Model):
         db_table = 'video_relacionado'
 
     def __str__(self):
-        return self.estado +' - Original: '+ str(self.video) +' - Convertido: '+ str(self.video_convertido)
+        return str(self.id) + ' - '+ self.estado +' - Original: '+ str(self.video) +' - Convertido: '+ str(self.video_convertido)
 
 
 class Participante(models.Model):

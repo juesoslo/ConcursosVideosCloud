@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .serializers import modeloJSON
 from django.conf import settings
-from concursos.models import VideoRelacionado, EstadosVideoOpciones
+from concursos.models import VideoRelacionado, EstadosVideoOpciones, ParticipanteVideo
 from .models import Proceso, LogConversion
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
@@ -207,19 +207,24 @@ def registrar_log_conversion( video, mensaje ):
 
 
 def enviarCorreo(video, estadoConversion ):
+	#print('Entra a enviar correo: ' +str(video)+ ' --- ' +estadoConversion)
+
 	#Buscando el participante correspondiente al video
 	participantes  = ParticipanteVideo.objects.filter(video=video)
+
+	#print('participantes: ' +str(participantes.count()) )
 
 	#si hay participantes con este video
 	for participante in participantes:
 		#Almacena el email del participante
-		destinatario = participante.email
+		destinatario = participante.participante.email
 
 		if( destinatario and estadoConversion ):
+			#print('envia el email a '+destinatario+ ' y estado: '+estadoConversion)
 			send_mail(
 				'Conversión de video terminada: ' +estadoConversion,
 				'El proceso de conversión de su video ha terminado con estado: ' +estadoConversion,
-				'no-reply@smartools.com',
+				'Smartools.com <no-reply@smartools.com>',
 				[destinatario],
 				fail_silently=False,
 			)
