@@ -33,12 +33,20 @@ class EstadosVideoOpciones(Enum):  # A subclass of Enum
 def get_file_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (uuid.uuid4(), ext)
-    return os.path.join('videos', str(instance.concurso.id), filename)
+    return makedirs(os.path.join('videos', str(instance.concurso.id), filename))
 
 def get_file_converted_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (uuid.uuid4(), ext)
-    return os.path.join('videos', str(instance.concurso.id), 'convertidos', filename)
+    return makedirs(os.path.join('videos', str(instance.concurso.id), 'convertidos', filename))
+
+def makedirs(path):
+    try:
+        os.makedirs(path)
+    except OSError as e:
+        if e.errno == 17:
+            # Dir already exists. No biggie.
+            pass
 
 class VideoRelacionado(models.Model):
     video = models.FileField(upload_to=get_file_path)
