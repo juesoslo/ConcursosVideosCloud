@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
-from .models import Concurso
+from .models import Concurso, Participante, ParticipanteVideo, VideoRelacionado
 
 def crear_url_automatica( ):
     maximo_intentos = 10
@@ -55,18 +55,53 @@ def get_concursos(request):
 @login_required
 def get_concurso(request):
     q = ''
+    nombre_concurso = ''
     concursos = []
+    videos = []
     if request.is_ajax():
         q = request.GET.get('id_event', '')
         tipo_peticion = request.GET.get('tipo_peticion', '')
         concursos = Concurso.objects.filter(id = q )
+
+        if int(tipo_peticion) == 4:
+            participantes = Participante.objects.filter(concurso__id = q).order_by('-created_at')
+
+            for x in participantes:
+                video = ParticipanteVideo.objects.filter(participante_id = x.id)
+                nombre_concurso = x.concurso
+
+                for vid in video:
+                    conv = VideoRelacionado.objects.filter(id = vid.id)
+                    for t in conv:
+                        temp ={}
+                        partic_create = x.created_at
+                        partic_id = x.id
+                        partic_nombre = x.nombre
+                        partic_apellido = x.apellido
+                        partic_email = x.email
+                        partic_mensaje = x.mensaje
+                        video_original = t.video
+                        video_convertido = t.video_convertido
+                        video_estado = t.estado
+                        temp['partic_create'] = partic_create
+                        temp['partic_id'] = partic_id
+                        temp['partic_nombre'] = partic_nombre
+                        temp['partic_apellido'] = partic_apellido
+                        temp['partic_email'] = partic_email
+                        temp['partic_mensaje'] = partic_mensaje
+                        temp['video_original'] = video_original
+                        temp['video_convertido'] = video_convertido
+                        temp['video_estado'] = video_estado
+                        videos.append(temp)
 
         #print('Ajax Id concurso' , q)
         #print('Tipo peticion' , tipo_peticion)
 
     context = {
         "search_text": q,
-        "mis_concursos": concursos
+        "mis_concursos": concursos,
+        "nombre_concurso": nombre_concurso,
+        "videos": videos
     };
 
     if int(tipo_peticion) == 1:
@@ -78,14 +113,17 @@ def get_concurso(request):
     elif int(tipo_peticion) == 3:
         return  render_to_response("concursos/delete_id_concurso__html_snippet.txt",
                                context)
+    elif int(tipo_peticion) == 4:
+            return  render_to_response("concursos/videos_id_concurso__html_snippet.txt",
+                               context)
 
 def es_url_unica( url, id_concurso='--vacio--' ):
     concursos = Concurso.objects.filter( url = url ) #Se busca la URL del concurso
     for concurso in concursos: #Recorre los concursos que tienen esa URL
         #Si existe OTRO concurso con esa URL
-        if id_concurso == '--vacio--' or ( id_concurso != '--vacio--' and concurso.id != int(id_concurso) ): 
+        if id_concurso == '--vacio--' or ( id_concurso != '--vacio--' and concurso.id != int(id_concurso) ):
             return False #No es URL única
-    
+
     return True #Es URL única
 
 
@@ -93,7 +131,7 @@ def es_url_unica( url, id_concurso='--vacio--' ):
 def crear_concurso(request):
     errors = []
     if request.method == "POST":
-        
+
         #Cargue del banner
         banner = ''
         for f in request.FILES.getlist('banner'):
