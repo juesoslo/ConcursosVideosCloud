@@ -59,7 +59,7 @@ class VideoRelacionado(models.Model):
         default=EstadosVideoOpciones.TODO.value
     )
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    concurso = models.ForeignKey(Concurso, on_delete=models.PROTECT, related_name='videos', default=None, blank=True, null=True)
+    concurso = models.ForeignKey(Concurso, on_delete=models.CASCADE, related_name='videos', default=None, blank=True, null=True)
 
     class Meta:
         verbose_name = 'video relacionado'
@@ -75,7 +75,7 @@ class Participante(models.Model):
     apellido = models.CharField(max_length=255)  # el apellido del participante
     email = models.EmailField(max_length=255)  # el correo del participante
     mensaje = models.TextField()  # mensaje relacionado con el video
-    concurso = models.ForeignKey(Concurso, on_delete=models.PROTECT, related_name='participantes')
+    concurso = models.ForeignKey(Concurso, on_delete=models.CASCADE, related_name='participantes')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -88,8 +88,8 @@ class Participante(models.Model):
 
 
 class ParticipanteVideo(models.Model):
-    video = models.ForeignKey(VideoRelacionado, on_delete=models.PROTECT)
-    participante = models.ForeignKey(Participante, on_delete=models.PROTECT)
+    video = models.ForeignKey(VideoRelacionado, on_delete=models.CASCADE)
+    participante = models.ForeignKey(Participante, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id) + ' - Participante: '+ str(self.participante) +' - Video: '+ str(self.video)

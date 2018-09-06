@@ -6,6 +6,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
 from .models import Concurso, Participante, ParticipanteVideo, VideoRelacionado
+import shutil
+from django.conf import settings
 
 def crear_url_automatica( ):
     maximo_intentos = 10
@@ -217,6 +219,12 @@ def eliminar_concurso(request):
         username = request.POST.get('username_delete', '')
         id_concurso =request.POST.get('id_delete_event', '')
 
+        try:
+            #Borrar carpeta del concurso
+            shutil.rmtree(settings.MEDIA_ROOT+"/videos/"+id_concurso)
+        except:
+            pass
+
         #print('Id concurso' , id_concurso)
 
         result_delete = Concurso.objects.filter(usuario = username, id=id_concurso).delete()
@@ -235,3 +243,4 @@ def eliminar_concurso(request):
     else:
         url_unica = crear_url_automatica()
         return render(request, 'concursos/index.html', {"url_unica": url_unica})
+
