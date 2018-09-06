@@ -33,11 +33,13 @@ class EstadosVideoOpciones(Enum):  # A subclass of Enum
 def get_file_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (uuid.uuid4(), ext)
-    return makedirs(os.path.join('videos', str(instance.concurso.id), filename))
+    makedirs(os.path.join('videos', str(instance.concurso.id)))
+    return os.path.join('videos', str(instance.concurso.id), filename)
 
 def get_file_converted_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (uuid.uuid4(), ext)
+    makedirs(os.path.join('videos', str(instance.concurso.id), 'convertidos'))
     return os.path.join('videos', str(instance.concurso.id), 'convertidos', filename)
 
 def makedirs(path):
