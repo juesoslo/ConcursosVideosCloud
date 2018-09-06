@@ -48,8 +48,8 @@ class VideoRelacionado(models.Model):
         choices=[(tag.value, tag.name) for tag in EstadosVideoOpciones],
         default=EstadosVideoOpciones.TODO.value
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    concurso = models.ForeignKey(Concurso, on_delete=models.PROTECT, related_name='videos')
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    concurso = models.ForeignKey(Concurso, on_delete=models.PROTECT, related_name='videos', default=None, blank=True, null=True)
 
     class Meta:
         verbose_name = 'video relacionado'
