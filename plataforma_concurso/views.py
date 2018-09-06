@@ -5,7 +5,7 @@ import json
 from django.core.files.uploadedfile import UploadedFile
 
 # Create your views here.
-from concursos.models import Concurso, VideoRelacionado, Participante, ParticipanteVideo
+from concursos.models import Concurso, VideoRelacionado, Participante, ParticipanteVideo, EstadosVideoOpciones
 from plataforma_concurso.forms import ParticipanteForm
 
 
@@ -42,17 +42,31 @@ def concurso_videos(request, idconcurso):
 
     concursos = Participante.objects.filter(concurso__url = url_concurso )
 
+    temp_conc = Concurso.objects.filter(url=idconcurso)
+
+    nombre_concurso = temp_conc[0].nombre
+
     for x in concursos:
         video = ParticipanteVideo.objects.filter(participante_id = x.id)
         print(video)
         for vid in video:
-            conv = VideoRelacionado.objects.filter(id=vid.id)
+            conv = VideoRelacionado.objects.filter(id=vid.id, estado ="Procesado")
             for t in conv:
                 temp ={}
-                part = x.id
-                vid = t.video_convertido
-                temp['part'] = part
-                temp['vid'] = vid
+                partic_id = x.id
+                partic_nombre = x.nombre
+                partic_apellido = x.apellido
+                partic_email = x.email
+                partic_mensaje = x.mensaje
+                video_original = t.video
+                video_convertido = t.video_convertido
+                temp['partic_id'] = partic_id
+                temp['partic_nombre'] = partic_nombre
+                temp['partic_apellido'] = partic_apellido
+                temp['partic_email'] = partic_email
+                temp['partic_mensaje'] = partic_mensaje
+                temp['video_original'] = video_original
+                temp['video_convertido'] = video_convertido
                 videos.append(temp)
                 print("video: ",t.video)
 
@@ -62,6 +76,7 @@ def concurso_videos(request, idconcurso):
     context = {
         "my_url": my_url,
         "url_concurso": url_concurso,
+        "concurso": nombre_concurso,
         "participantes": concursos,
         "videos": videos
     };
@@ -71,7 +86,7 @@ def concurso_videos(request, idconcurso):
         return render(request, 'videos_concurso.html', context)
     else:
         print("concurso NO encontrado", url_concurso)
-        return render(request, 'error_concurso.html', context)
+        return render(request, 'videos_concurso.html', context)
 
 def concurso_participante(request, idconcurso):
     my_url = reverse(concurso, args=(idconcurso,))
