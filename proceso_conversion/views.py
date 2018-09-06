@@ -144,7 +144,8 @@ def convertir_video_con_aplicacion_externa( video_original, video_convertido ):
 	return_value = subprocess.call([
 	    'ffmpeg',
 	    '-i', video_original,
-	    '-c', 'copy',
+	    '-vcodec', 'copy',
+	    '-acodec', 'copy',
 	    '-strict', '-2',
 	    video_convertido,
 	])
