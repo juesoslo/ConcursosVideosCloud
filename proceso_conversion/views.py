@@ -149,6 +149,15 @@ def convertir_video_con_aplicacion_externa( video_original, video_convertido ):
 		    '-c', 'copy',
 		    video_convertido,
 		])
+	elif ext == 'flv':
+		return_value = subprocess.call([
+		    'ffmpeg',
+		    '-i', video_original,
+		    '-c:a', 'copy',
+		    '-c:v', 'libx264',
+		    '-profile:v', 'baseline',
+		    video_convertido,
+		])
 	else:
 		return_value = subprocess.call([
 		    'ffmpeg',
