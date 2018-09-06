@@ -21,14 +21,17 @@
           {% for video in videos %}
             <div class="col-12 col-md-6 col-lg-4 col-xl-4">
                 <div class="item-listing-container-skrn">
-                  <video id="my-video" class="video-js" controls preload="auto" width="500" height="264"
-                  poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-                    <source src="{{ video.video_convertido.url }}" type='video/mp4'>
-                    <p class="vjs-no-js">
-                      To view this video please enable JavaScript, and consider upgrading to a web browser that
-                      <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                    </p>
-                  </video>
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <video id="my-video" class="video-js embed-responsive-item" controls preload="auto"
+                    poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+                      <source src="{{ video.video_convertido.url }}" type='video/mp4'>
+                      <p class="vjs-no-js">
+                        To view this video please enable JavaScript, and consider upgrading to a web browser that
+                        <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                      </p>
+                    </video>
+                  </div>
+
                     <div class="item-listing-text-skrn">
                         <div class="item-listing-text-skrn-vertical-align"><h6><a href="skrn/dashboard-movie-profile.html">{{ video.partic_nombre }} {{ video.partic_apellido }}</a></h6>
                             <div

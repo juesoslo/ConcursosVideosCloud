@@ -19,6 +19,7 @@ var eventSearch = function()  {
     $('#myevento_view').html("");
     $('#myevento_edit').html("");
     $('#myevento_delete').html("");
+    $('#myevento_videos').html("");
 
   }  else  {
     //There are at least two characters. Execute the search.
@@ -30,6 +31,8 @@ var eventSearch = function()  {
       $('#myevento_view').html(sersverResponse_data);
       $('#myevento_edit').html(sersverResponse_data);
       $('#myevento_delete').html(sersverResponse_data);
+      $('#myevento_videos').html(sersverResponse_data);
+      
     }
 
     var config = {

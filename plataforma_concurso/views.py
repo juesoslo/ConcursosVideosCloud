@@ -53,7 +53,7 @@ def concurso_videos(request, idconcurso):
 
     for x in concursos:
         video = ParticipanteVideo.objects.filter(participante_id = x.id)
-        print(video)
+
         for vid in video:
             conv = VideoRelacionado.objects.filter(id = vid.id, estado ="Procesado")
             for t in conv:
@@ -73,10 +73,6 @@ def concurso_videos(request, idconcurso):
                 temp['video_original'] = video_original
                 temp['video_convertido'] = video_convertido
                 videos.append(temp)
-                print("video: ",t.video)
-
-    print("Lista de videos ", videos)
-    print("Lista de participantes ", concursos)
 
     context = {
         "my_url": my_url,
