@@ -22,10 +22,7 @@
     {% endblock %}
 </head>
 <body>
-{% url 'platform_concurso' as platform_concurso %}
 {% url 'platform_index' as platform_index %}
-{% url 'platform_concurso|addstr:"videos/"' as platform_videos %}
-{% url 'platform_form' as platform_form %}
 
 <div id="sidebar-bg">
     <header id="videohead-pro" class="sticky-header">
@@ -130,6 +127,7 @@
 <script src='{% static "js/afterglow.min.js" %}' defer></script><!-- Video Player JS Plugin -->
 <script src='{% static "js/script.js" %}' defer></script><!-- Custom Document Ready JS -->
 <script src='{% static "js/script-dashboard.js" %}' defer></script><!-- Custom Document Ready for Dashboard Only JS -->
+<script src='https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js' defer></script>
 {% block scripts %}
 {% endblock %}
 
