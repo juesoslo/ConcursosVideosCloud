@@ -141,14 +141,21 @@ def makedirs(path):
 
 
 def convertir_video_con_aplicacion_externa( video_original, video_convertido ):
-	return_value = subprocess.call([
-	    'ffmpeg',
-	    '-i', video_original,
-	    '-vcodec', 'copy',
-	    '-acodec', 'copy',
-	    '-strict', '-2',
-	    video_convertido,
-	])
+	ext = video_original.split('.')[-1]
+    if ext == 'mkv':
+		return_value = subprocess.call([
+		    'ffmpeg',
+		    '-i', video_original,
+		    '-c', 'copy',
+		    video_convertido,
+		])
+	else:
+		return_value = subprocess.call([
+		    'ffmpeg',
+		    '-i', video_original,
+		    '-strict', '-2',
+		    video_convertido,
+		])
 
 	if return_value:
 	    return False
@@ -239,9 +246,13 @@ def enviarCorreo(video, estadoConversion ):
 
 		if( destinatario and estadoConversion ):
 			#print('envia el email a '+destinatario+ ' y estado: '+estadoConversion)
+			mensaje = ''
+			if estadoConversion == EstadosVideoOpciones.DONE.value:
+				mensaje = '. El video ya ha sido publicado en la página del concurso.'
+
 			send_mail(
 				'Conversión de video terminada: ' +estadoConversion,
-				'El proceso de conversión de su video ha terminado con estado: ' +estadoConversion,
+				'El proceso de conversión de su video ha terminado con estado: ' +estadoConversion+ mensaje,
 				'Smartools.com <no-reply@smartools.com>',
 				[destinatario],
 				fail_silently=False,
