@@ -20,7 +20,7 @@ class Concurso(models.Model):
         db_table = 'concurso'
 
     def __str__(self):
-        return '%s' % (self.nombre)
+        return str(self.id) + ' - '+ self.nombre
 
 
 class EstadosVideoOpciones(Enum):  # A subclass of Enum
@@ -57,7 +57,8 @@ class VideoRelacionado(models.Model):
         db_table = 'video_relacionado'
 
     def __str__(self):
-        return str(self.id) + ' - '+ self.estado +' - Original: '+ str(self.video) +' - Convertido: '+ str(self.video_convertido)
+        return str(self.id) + ' - Concurso: ' +str(self.concurso)+ ' - '+ self.estado #+' - Original: '+ str(self.video) +' - Convertido: '+ str(self.video_convertido)
+        #return str(self.id) + ' - '+ self.estado +' - Original: '+ str(self.video) +' - Convertido: '+ str(self.video_convertido)
 
 class Participante(models.Model):
     nombre = models.CharField(max_length=255)  # el nombre del participante
