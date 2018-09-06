@@ -258,7 +258,7 @@ def enviarCorreo(video, estadoConversion ):
 					[destinatario],
 					fail_silently=False,
 				)
-			except OSError as e:
+			except:
 				pass
 
 	return True
