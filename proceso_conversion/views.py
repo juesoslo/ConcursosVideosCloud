@@ -9,6 +9,8 @@ from datetime import datetime
 import socket
 import subprocess
 import _thread
+import uuid
+import os
 
 # Create your views here.
 def convertir_videos(request):
