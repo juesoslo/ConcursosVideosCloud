@@ -4,3 +4,4 @@ django-registration-redux
 django-tools
 djangorestframework
 Pillow
+requests
