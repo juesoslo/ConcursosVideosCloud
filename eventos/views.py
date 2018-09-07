@@ -82,7 +82,7 @@ def registrar(request):
             # Verify variable context
             errors.append('Tu cuenta se ha creado exitosamente.')
             #return render(request, 'concursos/index.html', context )
-            return HttpResponseRedirect('/concursos', context)
+            return HttpResponseRedirect('/concursos', {'success': errors})
         else:
             errors.append('Tu cuenta se ha creado exitosamente.')
             return render(request, 'eventos/signup-step2.html', {'success': errors})
