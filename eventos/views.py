@@ -75,8 +75,17 @@ def registrar(request):
                                  email=username,
                                  password=password)
 
-        errors.append('La cuenta se ha creado exitosamente.')
-        return render(request, 'eventos/signup-step2.html', {'success': errors})
+        user = auth.authenticate(username=username, password=password)
+        if user is not None and user.is_active:
+            # Correct password, and the user is marked "active"
+            auth.login(request, user)
+            # Verify variable context
+            errors.append('Tu cuenta se ha creado exitosamente.')
+            return render(request, 'concursos/index.html', {'success': errors})
+            # return HttpResponseRedirect('/concursos')
+        else:
+            errors.append('Tu cuenta se ha creado exitosamente.')
+            return render(request, 'eventos/signup-step2.html', {'success': errors})
 
 def landing(request):
     return render(request, 'eventos/landing.html')

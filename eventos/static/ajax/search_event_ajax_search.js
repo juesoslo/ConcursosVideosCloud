@@ -28,11 +28,16 @@ var eventSearch = function()  {
                         jqXHR_ignored)  {
       //alert("sersverResponse_data='" + sersverResponse_data + "', textStatus_ignored='" + textStatus_ignored + "', jqXHR_ignored='" + jqXHR_ignored + "'");
 
-      $('#myevento_view').html(sersverResponse_data);
-      $('#myevento_edit').html(sersverResponse_data);
-      $('#myevento_delete').html(sersverResponse_data);
-      $('#myevento_videos').html(sersverResponse_data);
-      
+      if(tipo_peticion == '1'){
+        $('#myevento_view').html(sersverResponse_data);
+      }else if (tipo_peticion == '2') {
+        $('#myevento_edit').html(sersverResponse_data);
+      }else if (tipo_peticion == '3') {
+        $('#myevento_delete').html(sersverResponse_data);
+      }else if (tipo_peticion == '4') {
+        $('#myevento_videos').html(sersverResponse_data);
+      }
+
     }
 
     var config = {
