@@ -8,6 +8,8 @@ from django.utils.crypto import get_random_string
 from .models import Concurso, Participante, ParticipanteVideo, VideoRelacionado
 import shutil
 from django.conf import settings
+import datetime
+from django.utils.dateparse import parse_date
 
 def crear_url_automatica( ):
     maximo_intentos = 10
@@ -128,7 +130,6 @@ def es_url_unica( url, id_concurso='--vacio--' ):
 
     return True #Es URL única
 
-
 @login_required
 def crear_concurso(request):
     errors = []
@@ -145,6 +146,19 @@ def crear_concurso(request):
         fec_ini = request.POST.get('fec_ini', '')
         fec_fin = request.POST.get('fec_fin', '')
         descripcion = request.POST.get('descripcion', '')
+
+        if parse_date(fec_ini) < datetime.date.today() : #Si la fecha de inicio ya pasó, se asigna "Hoy"
+            errors.append('Fecha inicial no válida. Se asignó automáticamente la fecha de hoy')
+            fec_ini = str(datetime.date.today())
+
+        if parse_date(fec_fin) < datetime.date.today() : #Si la fecha de fin ya pasó, se asigna "Hoy"
+            errors.append('Fecha final no válida. Se asignó automáticamente la fecha de hoy')
+            fec_fin = str(datetime.date.today())
+
+        if parse_date(fec_ini) > parse_date(fec_fin): #Si la fecha inicial es mayor a la fecha final
+            errors.append('Fechas no válidas. Se asignaron fechas automáticamente')
+            fec_fin = fec_ini #se dejan ambas con la fecha final
+
 
         if es_url_unica(url) is False:
             errors.append('La url está en uso. Se asignó automáticamente.')
@@ -196,6 +210,18 @@ def editar_concurso(request):
                     concurso.url = url
                 else:
                     errors.append('URL no actualizada porque ya está en uso.')
+
+                if parse_date(fec_ini) < datetime.date.today() : #Si la fecha de inicio ya pasó, se asigna "Hoy"
+                    errors.append('Fecha inicial no válida. Se asignó automáticamente la fecha de hoy')
+                    fec_ini = str(datetime.date.today())
+
+                if parse_date(fec_fin) < datetime.date.today() : #Si la fecha de fin ya pasó, se asigna "Hoy"
+                    errors.append('Fecha final no válida. Se asignó automáticamente la fecha de hoy')
+                    fec_fin = str(datetime.date.today())
+
+                if parse_date(fec_ini) > parse_date(fec_fin): #Si la fecha inicial es mayor a la fecha final
+                    errors.append('Fechas no válidas. Se asignaron fechas automáticamente')
+                    fec_fin = fec_ini #se dejan ambas con la fecha final
 
                 concurso.nombre = nombre
                 concurso.fec_inicio = fec_ini
