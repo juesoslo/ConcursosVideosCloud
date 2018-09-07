@@ -1,0 +1,8 @@
+Django==2.1
+django-registration
+django-registration-redux
+django-tools
+djangorestframework
+Pillow
+requests
+psycopg2

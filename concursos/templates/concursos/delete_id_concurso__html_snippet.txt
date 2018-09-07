@@ -1,0 +1,12 @@
+{% if  mis_concursos.count > 0 %}
+  {% for  concurso in mis_concursos %}
+    <input type="text" name="id_delete_event" value="{{ concurso.id }}" hidden>
+
+    <div class="form-group row">
+      <h4 class="col-sm-12 col-form-label ">¿Realmente quieres eliminar tu concurso <strong>"{{ concurso.nombre }}"</strong>?</h4>
+    </div>
+  {% endfor %}
+
+{% else %}
+  Error! concurso no encontrado
+{% endif %}

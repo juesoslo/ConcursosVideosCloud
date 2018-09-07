@@ -1,0 +1,175 @@
+{% extends 'eventos/base_landing.html' %}
+
+{% block head %}
+
+<title>Smart Tools - Registrar</title>
+
+{% endblock %}
+
+{% block content %}
+
+		<div id="content-pro">
+
+  	 		<div class="container">
+					<div class="centered-headings-pro pricing-plans-headings">
+						<h6>Por un bajo precio mensual</h6>
+						<h1>Crea concursos de videos para tus clientes</h1>
+					</div>
+			</div><!-- close .container -->
+
+			<div class="container">
+				<ul id="registration-steps-pro">
+					<li>
+						<a href="/precios">
+							<div class="registration-step-circle-icon">01</div>
+							<div class="registration-step-number">Paso 1</div>
+							<h5 class="registration-step-title">Selecciona tu plan</h5>
+						</a>
+					</li>
+					<li class="current-menu-item">
+						<a href="/registro">
+							<div class="registration-step-circle-icon">02</div>
+							<div class="registration-step-number">Paso 2</div>
+							<h5 class="registration-step-title">Crea tu cuenta</h5>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<div class="registration-step-circle-icon">03</div>
+							<div class="registration-step-number">Paso 3</div>
+							<h5 class="registration-step-title">Bienvenid@ a SmartTools!</h5>
+						</a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+
+
+			<div id="pricing-plans-background-image">
+				<div class="container">
+						<div class="registration-steps-page-container">
+
+	  					 <form class="registration-steps-form" action="/registro/new" method="POST">
+							{% csrf_token %}
+
+							 <div class="registration-social-login-container">
+
+    	  						 <div class="form-group">
+    								 <label for="full-name" class="col-form-label">Nombres</label>
+    	  							 <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombres" required>
+    	  						 </div>
+										 <div class="form-group">
+    								 <label for="full-name" class="col-form-label">Apellidos</label>
+    	  							 <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos" required>
+    	  						 </div>
+    	  						 <div class="form-group">
+    								 <label for="email" class="col-form-label">Email</label>
+    	  							 <input type="text" class="form-control" id="email" name="email" placeholder="email" required>
+    	  						 </div>
+    	  						 <div class="form-group">
+    								 <div class="row">
+    									<div class="col">
+    	  								 <label for="password" class="col-form-label">Contraseña</label>
+    	  	  							 <input type="password" class="form-control" id="password" name="password" placeholder="&middot;&middot;&middot;&middot;&middot;&middot;" required>
+    									</div>
+    									<div class="col">
+    	  								 <label for="confirm-password" class="col-form-label">&nbsp;</label>
+    	  	  							 <input type="password" class="form-control" id="confirm-password" name="password_confirm" placeholder="Confirmar contraseña" required>
+    									</div>
+    								 </div>
+    	  						 </div>
+
+							 </div><!-- close .registration-social-login-container -->
+
+
+
+							 <div class="clearfix"></div>
+							 {% if errors %}
+									 {% for error in errors %}
+										 <div class="alert alert-danger" style="text-align: center;">
+											 <strong>Error!</strong> {{ error }} .
+										 </div>
+									 {% endfor %}
+							 {% endif %}
+							 {% if success %}
+								 {% for msj in success %}
+									 <div class="alert alert-success" style="text-align: center;">
+										 <strong>Hecho!</strong> {{ msj }} Clic <a href="/" class="alert-link">aquí para ingresar</a>.
+									 </div>
+								 {% endfor %}
+							 {% endif %}
+	  						 <div class="form-group last-form-group-continue">
+									 <button class="btn btn-green-pro submit-btn">Registrar</button>
+	  							 <!-- <a href="signup-step3.html" class="btn btn-green-pro">Continue</a> -->
+								 <span class="checkbox-remember-pro"><input type="checkbox" id="checkbox-terms" checked required><label for="checkbox-terms" class="col-form-label">Al hacer clic en "Registrar", usted acepta nuestros <a href="#!">Términos de Uso</a> y
+<a href="#!">Política de Privacidad</a> incluído el uso de cookies.</label></span>
+								 <div class="clearfix"></div>
+	  						 </div>
+	  					 </form>
+
+						</div><!-- close .registration-steps-page-container -->
+
+				</div><!-- close .container -->
+			</div><!-- close #pricing-plans-background-image -->
+
+		</div><!-- close #content-pro -->
+
+{% endblock %}
+
+
+		<a href="#0" id="pro-scroll-top"><i class="fas fa-chevron-up"></i></a>
+
+
+		<!-- Modal -->
+		<div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="LoginModal" aria-hidden="true">
+			 <button type="button" class="close float-close-pro" data-dismiss="modal" aria-label="Close">
+			           <span aria-hidden="true">&times;</span>
+			</button>
+		  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+		    <div class="modal-content">
+				 <div class="modal-header-pro">
+					 <h2>Welcome Back</h2>
+					 <h6>Sign in to your account to continue using SKRN</h6>
+				 </div>
+				 <div class="modal-body-pro social-login-modal-body-pro">
+
+					 <div class="registration-social-login-container">
+						 <form>
+							 <div class="form-group">
+								 <input type="text" class="form-control" id="username" placeholder="Username">
+							 </div>
+							 <div class="form-group">
+								 <input type="password" class="form-control" id="password" placeholder="Password">
+							 </div>
+							 <div class="form-group">
+								 <button type="button" class="btn btn-green-pro btn-display-block">Sign In</button>
+							 </div>
+							 <div class="container-fluid">
+								 <div class="row no-gutters">
+							 		<div class="col checkbox-remember-pro"><input type="checkbox" id="checkbox-remember"><label for="checkbox-remember" class="col-form-label">Remember me</label></div>
+									<div class="col forgot-your-password"><a href="#!">Forgot your password?</a></div>
+								</div>
+							</div><!-- close .container-fluid -->
+
+						 </form>
+
+						 <div class="registration-social-login-or">or</div>
+
+					 </div><!-- close .registration-social-login-container -->
+
+					 <div class="registration-social-login-options">
+					 	<h6>Sign in with your social account</h6>
+						<div class="social-icon-login facebook-color"><i class="fab fa-facebook-f"></i> Facebook</div>
+						<div class="social-icon-login twitter-color"><i class="fab fa-twitter"></i> Twitter</div>
+						<div class="social-icon-login google-color"><i class="fab fa-google-plus-g"></i> Google</div>
+					 </div><!-- close .registration-social-login-options -->
+
+					 <div class="clearfix"></div>
+
+
+ 		      </div><!-- close .modal-body -->
+
+			 <a class="not-a-member-pro" href="signup-step2.html">Not a member? <span>Join Today!</span></a>
+		    </div><!-- close .modal-content -->
+		  </div><!-- close .modal-dialog -->
+		</div><!-- close .modal -->

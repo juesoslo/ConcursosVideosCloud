@@ -1,0 +1,51 @@
+<div>{{ errores }}</div>
+
+{% if  mis_concursos.count > 0 %}
+  {% for  concurso in mis_concursos %}
+
+    <input type="text" name="id_edit_event" value="{{ concurso.id }}" hidden>
+    
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Nombre del concurso</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="nombre" value="{{ concurso.nombre }}" placeholder="Nombre del concurso" required>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="exampleFormControlSelect2" class="col-sm-3 col-form-label">Banner o imagen</label>
+      <div class="col-sm-9">
+        <input type="file" class="form-control" name="banner" value="" placeholder="Banner o imagen del concurso">
+      </div>
+      <img src="{{ concurso.banner.url }}" width="468" height="60">
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword2" class="col-sm-3 col-form-label">URL única</label>
+      <div class="col-sm-9">
+        <small>http://172.24.42.56:8080/platform/</small>
+        <input type="text" class="form-control" name="url" value="{{ concurso.url }}" placeholder="URL única" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Fecha de Inicio</label>
+      <div class="col-sm-9">
+        <input type="date" class="form-control" name="fec_ini" value="{{ concurso.fec_inicio|date:'Y-m-d'  }}" placeholder="Fecha de Inicio" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Fecha de Fin</label>
+      <div class="col-sm-9">
+        <input type="date" class="form-control" name="fec_fin" value="{{ concurso.fec_fin|date:'Y-m-d' }}" placeholder="Fecha de Fin" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="exampleInputPassword2" class="col-sm-3 col-form-label">Descripción del premio</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" name="descripcion" value="{{ concurso.descripcion }}" placeholder="Descripción del premio" required>
+      </div>
+    </div>
+  {% endfor %}
+
+{% else %}
+  Error! Consultar con el administrador
+{% endif %}

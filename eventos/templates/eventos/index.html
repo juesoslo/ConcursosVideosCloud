@@ -35,17 +35,20 @@
       <div class="navbar-menu-wrapper d-flex align-items-center">
         <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
           <li class="nav-item active" id="listar_mis_eventos">
-            <a href="#" class="nav-link">
+            <a href="/account/loggedin" class="nav-link">
               <i class="mdi mdi-elevation-rise"></i>Mis Eventos</a>
           </li>
-
+          <li class="nav-item active" id="listar_mis_concursos">
+            <a href="/concursos/" class="nav-link">
+              <i class="mdi mdi-elevation-rise"></i>Mis Concursos</a>
+          </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
 
           <li class="nav-item dropdown d-none d-xl-inline-block">
             <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               {% if user.is_authenticated %}
-              <span class="profile-text">Hello, {{ user.username }} !</span>
+              <span class="profile-text">Hola, {{ user.username }} {{user.first_name}}  {{ user.last_name}}!</span>
               <input type="text" name="username" id="username" value="{{ user.username }}" hidden>
               {% else %}
               <span class="profile-text">Hello, {{ user.username }} !</span>

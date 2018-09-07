@@ -1,0 +1,86 @@
+{% extends 'skrn/base.html' %}
+
+{% block styles %}
+<link href="https://vjs.zencdn.net/7.1.0/video-js.css" rel="stylesheet">
+{% endblock %}
+
+{% block toppage %}
+
+<div class="text-center mx-auto box h-100 d-flex justify-content-center flex-column">
+    <h1>{{ concurso }}</h1>
+</div>
+
+{% endblock %}
+
+{% block content %}
+    <div class="clearfix"></div>
+    <div class="dashboard-container">
+        <h4 class="heading-extra-margin-bottom">Vídeos Participantes</h4>
+
+        <div class="row">
+          {% for video in videos %}
+            <div class="col-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="item-listing-container-skrn">
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <video id="my-video" class="video-js embed-responsive-item" controls preload="auto"
+                    poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+                      <source src="{{ video.video_convertido.url }}" type='video/mp4'>
+                      <p class="vjs-no-js">
+                        To view this video please enable JavaScript, and consider upgrading to a web browser that
+                        <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                      </p>
+                    </video>
+                  </div>
+
+                    <div class="item-listing-text-skrn">
+                        <div class="item-listing-text-skrn-vertical-align"><h6><a href="skrn/dashboard-movie-profile.html">{{ video.partic_nombre }} {{ video.partic_apellido }}</a></h6>
+                            <div
+                                    class="circle-rating-pro"
+                                    data-value="100"
+                                    data-animation-start-value="0"
+                                    data-size="32"
+                                    data-thickness="3"
+                                    data-fill="{
+							          &quot;color&quot;: &quot;#42b740&quot;
+							        }"
+                                    data-empty-fill="#def6de"
+                                    data-reverse="true"
+                            ><span style="color:#42b740;">100</span></div>
+                        </div><!-- close .item-listing-text-skrn-vertical-align -->
+                    </div><!-- close .item-listing-text-skrn -->
+                </div><!-- close .item-listing-container-skrn -->
+            </div><!-- close .col -->
+
+        {% endfor %}
+        </div><!-- close .row -->
+
+
+        {% if videos.has_other_pages %}
+          <ul class="page-numbers">
+            {% if users.has_previous %}
+              <li><a class="previous page-numbers" href="?page={{ videos.previous_page_number }}"><i class="fas fa-chevron-left"></i></a></li>
+            {% else %}
+              <span><i class="fas fa-chevron-left"></i></span>
+            {% endif %}
+            {% for i in videos.paginator.page_range %}
+              {% if videos.number == i %}
+                <li><span class="page-numbers current">{{ i }}</span></li>
+              {% else %}
+                <li><a class="page-numbers" href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% if videos.has_next %}
+              <li><a class="next page-numbers" href="?page={{ videos.next_page_number }}"><i class="fas fa-chevron-right"></i></a></li>
+            {% else %}
+              <span><i class="fas fa-chevron-right"></i></span>
+            {% endif %}
+          </ul>
+        {% endif %}
+
+
+    </div><!-- close .dashboard-container -->
+{% endblock %}
+
+{% block scripts %}
+<script src="https://vjs.zencdn.net/7.1.0/video.js"></script>
+{% endblock %}
