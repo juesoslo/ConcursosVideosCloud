@@ -81,14 +81,8 @@ def registrar(request):
             auth.login(request, user)
             # Verify variable context
             errors.append('Tu cuenta se ha creado exitosamente.')
-            url_unica = crear_url_automatica()
-            context = {
-                'STATIC_URL': settings.STATIC_URL,
-                "url_unica": url_unica,
-                'success': errors
-            };
-            return render(request, 'concursos/index.html', context )
-            # return HttpResponseRedirect('/concursos')
+            #return render(request, 'concursos/index.html', context )
+            return HttpResponseRedirect('/concursos', context)
         else:
             errors.append('Tu cuenta se ha creado exitosamente.')
             return render(request, 'eventos/signup-step2.html', {'success': errors})
@@ -98,12 +92,7 @@ def landing(request):
 
 @login_required
 def index(request):
-    url_unica = crear_url_automatica()
-    context = {
-        'STATIC_URL': settings.STATIC_URL,
-        "url_unica": url_unica
-    };
-    return render(request, 'concursos/index.html', context)
+    return render(request, 'concursos/index.html')
 
 @login_required
 def home(req):
