@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'eh-%$94j2)r#bo*@o!x#@tf$k_k7*ftah^&ddjz3v##3zq+9+v'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -73,12 +71,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project0.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+DATABASE_USER = os.environ.get("CLOUDG7_DB_USER", '')
+DATABASE_PASSWORD = os.environ.get("CLOUDG7_DB_PASSWORD", '')
+DATABASE_HOST = os.environ.get("CLOUDG7_DB_HOST", '')
 DATABASES = {
-    ## Connect to my Home Database
+    # Connect to my Home Database
     # 'default': {
     #     'NAME': 'cloud',
     #     'ENGINE': 'django.db.backends.postgresql',
@@ -90,42 +90,20 @@ DATABASES = {
     #     'HOST': 'localhost',
     #     'PORT': '5434',
     # }
-    ## Connect to my AWS Database
+    # Connect to my AWS RDS POSTGRES Database
+    'default': {
+        'NAME': 'cloud',
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': DATABASE_USER,
+        'PASSWORD': DATABASE_PASSWORD,
+        'HOST': DATABASE_HOST,
+        'PORT': '5432',
+    }
+
     # 'default': {
-    #     'NAME': 'baltetlcgm',
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'OPTIONS' : {
-    #             'options': '-c search_path=project0'
-    #         },
-    #     'USER': 'baltetlcgm',
-    #     'PASSWORD': 'xkvlx!69',
-    #     'HOST': '10.152.166.116',
-    #     'PORT': '5432',
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': 'mydatabase',
     # }
-    ## Connect to my Cloud VM Uniandes Database
-      'default': {
-          'NAME': 'cloud',
-          'ENGINE': 'django.db.backends.postgresql',
-     
-          'OPTIONS' : {
-                  'options': '-c search_path=project0'
-              },
-     
-          'OPTIONS': {
-              'options': '-c search_path=project0'
-          },
-     
-          'USER': 'postgres',
-          'PASSWORD': '14827',
-          'HOST': '172.24.42.21',
-          'PORT': '5432',
-      }
-
-    #'default': {
-    #    'ENGINE': 'django.db.backends.sqlite3',
-    #    'NAME': 'mydatabase',
-    #}
-
 }
 
 # Password validation
@@ -146,7 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -159,7 +136,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -179,9 +155,8 @@ STATICFILES_DIRS = (
 SESSION_COOKIE_AGE = 3600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-MEDIA_ROOT = os.path.join(BASE_DIR, '' )
+MEDIA_ROOT = os.path.join(BASE_DIR, '')
 MEDIA_URL = '/media/'
-
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'organicocooperativa@gmail.com'
