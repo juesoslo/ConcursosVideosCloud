@@ -6,3 +6,4 @@ djangorestframework
 Pillow
 requests
 psycopg2
+boto3

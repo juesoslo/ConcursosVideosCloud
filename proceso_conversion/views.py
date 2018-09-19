@@ -241,12 +241,12 @@ def registrar_log_conversion( video, mensaje ):
 
 
 def enviarCorreo(video, estadoConversion ):
-	#print('Entra a enviar correo: ' +str(video)+ ' --- ' +estadoConversion)
+	# print('Entra a enviar correo: ' +str(video)+ ' --- ' +estadoConversion)
 
-	#Buscando el participante correspondiente al video
+	# Buscando el participante correspondiente al video
 	participantes  = ParticipanteVideo.objects.filter(video=video)
 
-	#print('participantes: ' +str(participantes.count()) )
+	# print('participantes: ' +str(participantes.count()) )
 
 	#si hay participantes con este video
 	for participante in participantes:
