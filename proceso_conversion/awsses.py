@@ -1,3 +1,4 @@
+import os
 import boto3
 from botocore.exceptions import ClientError
 
@@ -17,36 +18,38 @@ def sendSESEmail(subject, body, recipientList):
     # CONFIGURATION_SET = "ConfigSet"
 
     # If necessary, replace us-west-2 with the AWS Region you're using for Amazon SES.
-    AWS_REGION = "us-west-2"
+    AWS_REGION = "us-east-1"
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", '')
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", '')
 
     # The subject line for the email.
     SUBJECT = "Amazon SES Test (SDK for Python)"
 
     # The email body for recipients with non-HTML email clients.
-    BODY_TEXT = ("Amazon SES Test (Python)\r\n"
-                 "This email was sent with Amazon SES using the "
-                 "AWS SDK for Python (Boto)."
-                 )
+    BODY_TEXT = "%s \r\n %s" % (subject, body)
 
     # The HTML body of the email.
     BODY_HTML = """
     <html>
     <head></head>
     <body>
-      <h1>Amazon SES Test (SDK for Python)</h1>
-      <p>This email was sent with
-        <a href='https://aws.amazon.com/ses/'>Amazon SES</a> using the
-        <a href='https://aws.amazon.com/sdk-for-python/'>
-          AWS SDK for Python (Boto)</a>.</p>
+      <h1>%s</h1>
+      <p>%s</p>
     </body>
     </html>
-    """
+    """ % (subject, body)
 
     # The character encoding for the email.
     CHARSET = "UTF-8"
 
     # Create a new SES resource and specify a region.
-    client = boto3.client('ses', region_name=AWS_REGION)
+    client = boto3.client(
+        'ses',
+        region_name=AWS_REGION,
+        # Hard coded strings as credentials, not recommended.
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+    )
 
     # Try to send the email.
     try:
