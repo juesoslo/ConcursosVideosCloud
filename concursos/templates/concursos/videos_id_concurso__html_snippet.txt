@@ -24,6 +24,12 @@
             <td title="Email del participante">{{video.partic_email}}</td>
             <td title="Estado del vídeo">{{video.video_estado}}</td>
             <td>
+              <input type="text" name="id_concurso" value="{{ concurso.id }}" hidden>
+              <a href="#" data-toggle="tooltip" data-placement="top" title="Reproducir Vídeo Original">
+                <button type="button" class="btn btn-icons btn-inverse-success video" data-video="{{ video.video_original.url }}" data-toggle="modal" data-target="#videoOriginalModal">
+                  <i class="mdi mdi-video"></i>
+                </button>
+              </a>
               <a href="#" data-toggle="tooltip" data-placement="top" title="Decargar Video Original">
               <button type="button" class="btn btn-icons btn-inverse-warning ">
                     <a href="{{video.video_original.url}}" download="video_original"><i class="mdi mdi-download"></i></a>
@@ -31,8 +37,8 @@
               </a>
                 {% if video.video_estado == 'Procesado' %}
                 <input type="text" name="id_concurso" value="{{ concurso.id }}" hidden>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="Reproducir Vídeo">
-                  <button type="button" class="btn btn-icons btn-inverse-info video" data-video="{{video.video_convertido.url}}" data-toggle="modal" data-target="#videoModal">
+                <a href="#" data-toggle="tooltip" data-placement="top" title="Reproducir Vídeo Convertido">
+                  <button type="button" class="btn btn-icons btn-inverse-info video" data-video="{{video.video_convertido.url}}" data-toggle="modal" data-target="#videoConvertidoModal">
                     <i class="mdi mdi-video"></i>
                   </button>
                 </a>
@@ -47,7 +53,25 @@
   </div>
 </div>
 
-<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="videoOriginalModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <video id="my-video-original" class="video-js" controls preload="auto" width="460" height="264"
+          poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+          <source id="original_video" src="" type='video/mp4'>
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="videoConvertidoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
@@ -64,6 +88,7 @@
     </div>
   </div>
 </div>
+
   <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
