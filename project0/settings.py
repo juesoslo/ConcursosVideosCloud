@@ -160,6 +160,9 @@ MEDIA_URL = '/media/'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'organicocooperativa@gmail.com'
-EMAIL_HOST_PASSWORD = 'organico123456'
+EMAIL_HOST_PASSWORD = os.environ.get("CLOUDG7_EMAIL_PASS", '')
 EMAIL_PORT = 25
 EMAIL_USE_TLS = True
+
+#URL final del aplicativo
+WEB_URL = os.environ.get("CLOUDG7_WEB_URL", '')

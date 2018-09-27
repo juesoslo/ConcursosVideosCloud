@@ -22,7 +22,7 @@
     <div class="form-group row">
       <label for="exampleInputPassword2" class="col-sm-3 col-form-label">URL única</label>
       <div class="col-sm-9">
-        <small>http://172.24.42.56:8080/platform/</small>
+        <small>{{ web_url }}/platform/</small>
         <input type="text" class="form-control" name="url" value="{{ concurso.url }}" placeholder="URL única" required>
       </div>
     </div>
