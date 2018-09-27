@@ -7,7 +7,7 @@ WEB_URL = os.environ.get("CLOUDG7_WEB_URL", '')
 #URL del servicio REST que se va a ejecutar
 url = WEB_URL+'/conversion/procesar/'
 
-#Los valores para los parámetros del servicio
+#Los valores para los parametros del servicio
 data = {}
 
 #Se ejecuta el servicio
