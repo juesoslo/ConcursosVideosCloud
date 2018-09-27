@@ -266,12 +266,17 @@ def enviarCorreo(video, estadoConversion):
                 mensaje = '. El video ya ha sido publicado en la página del concurso.'
 
             try:
-                send_mail(
+                # send_mail(
+                #     'Conversión de video terminada: ' + estadoConversion,
+                #     'El proceso de conversión de su video ha terminado con estado: ' + estadoConversion + mensaje,
+                #     'Smartools.com <no-reply@smartools.com>',
+                #     [destinatario],
+                #     fail_silently=False,
+                # )
+                sendSESEmail(
                     'Conversión de video terminada: ' + estadoConversion,
                     'El proceso de conversión de su video ha terminado con estado: ' + estadoConversion + mensaje,
-                    'Smartools.com <no-reply@smartools.com>',
-                    [destinatario],
-                    fail_silently=False,
+                    [destinatario]
                 )
             except:
                 pass
