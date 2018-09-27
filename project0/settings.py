@@ -155,7 +155,7 @@ STATICFILES_DIRS = (
 SESSION_COOKIE_AGE = 3600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-MEDIA_ROOT = os.path.join(BASE_DIR, '')
+MEDIA_ROOT = os.environ.get("MEDIA_ROOT_FOLDER", os.path.join(BASE_DIR, ''))
 MEDIA_URL = '/media/'
 
 EMAIL_HOST = 'smtp.gmail.com'
