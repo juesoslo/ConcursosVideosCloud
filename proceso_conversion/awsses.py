@@ -23,7 +23,7 @@ def sendSESEmail(subject, body, recipientList):
     AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", '')
 
     # The subject line for the email.
-    SUBJECT = "Amazon SES Test (SDK for Python)"
+    # SUBJECT = "Amazon SES Test (SDK for Python)"
 
     # The email body for recipients with non-HTML email clients.
     BODY_TEXT = "%s \r\n %s" % (subject, body)
@@ -71,7 +71,7 @@ def sendSESEmail(subject, body, recipientList):
                 },
                 'Subject': {
                     'Charset': CHARSET,
-                    'Data': SUBJECT,
+                    'Data': subject,
                 },
             },
             Source=SENDER,
