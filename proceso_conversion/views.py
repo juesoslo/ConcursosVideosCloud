@@ -100,13 +100,14 @@ def convertir_video(video):
     else:
         # Formando la URL con la que quedará el Video convertido
         video_convertido = get_file_converted_path(video, video.video.url)
-        # video_convertido = video_original.replace("videos/", "videos/convertidos/"+random_string) #Se agrega a la url el /convertidos
+        # video_convertido = video_original.replace("videos/", "videos/convertidos/"+random_string) #Se agrega a la url
+        # el /convertidos
         # video_convertido = video_convertido+".mp4" #Se agrega la extensión .mp4
         registrar_log_conversion(video, 'El video convertido se va a llamar: ' + video_convertido)
 
         # Se intenta convertir el video
-        convertido = convertir_video_con_aplicacion_externa(settings.MEDIA_ROOT + video_original,
-                                                            settings.MEDIA_ROOT + video_convertido)
+        convertido = convertir_video_con_aplicacion_externa(os.path.join(settings.MEDIA_ROOT, video_original),
+                                                            os.path.join(settings.MEDIA_ROOT, video_convertido))
         if convertido is True:
             registrar_log_conversion(video, 'Se actualiza el estado del video a DONE')
             video.video_convertido = video_convertido  # El video convertido es el mismo video original
