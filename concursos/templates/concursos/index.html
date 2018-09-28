@@ -270,7 +270,7 @@
 
   $('#creafechainicio').change(function () {
     var today = new Date($(this).val());
-    var day=today.getDate()>9?today.getDate()+1:"0"+(today.getDate()+1); // format should be "DD" not "D" e.g 09
+    var day=(today.getDate()+1)>9?(today.getDate()+1):"0"+(today.getDate()+1); // format should be "DD" not "D" e.g 09
     var month=(today.getMonth()+1)>9?(today.getMonth()+1):"0"+(today.getMonth()+1);
     var year=today.getFullYear();
 

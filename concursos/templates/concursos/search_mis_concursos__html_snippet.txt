@@ -22,7 +22,7 @@
             <tr>
               <td>{{concurso.created_at}}</td>
               <td title="{{concurso.nombre}}: {{concurso.descripcion}}">{{concurso.nombre}}</td>
-              <td title="{{concurso.nombre}}: {{concurso.descripcion}}"><a href="http://172.24.42.56:8080/platform/{{concurso.url}}" target="_blank">http://172.24.42.56:8080/platform/{{concurso.url}}</a></td>
+              <td title="{{concurso.nombre}}: {{concurso.descripcion}}"><a href="{{web_url}}/platform/{{concurso.url}}" target="_blank">{{web_url}}/platform/{{concurso.url}}</a></td>
               <td title="{{concurso.nombre}}: {{concurso.descripcion}}">{{concurso.fec_inicio}}</td>
               <td title="{{concurso.nombre}}: {{concurso.descripcion}}">{{concurso.fec_fin}}</td>
               <td>

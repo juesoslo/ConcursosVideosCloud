@@ -27,14 +27,15 @@ def crear_url_automatica( ):
 @login_required
 def index(request):
     url_unica = crear_url_automatica()
-    return render(request, 'concursos/index.html', {"url_unica": url_unica})
+    return render(request, 'concursos/index.html', {"url_unica": url_unica, "web_url": settings.WEB_URL})
 
 @login_required
 def home(req):
     url_unica = crear_url_automatica()
     context = {
         'STATIC_URL': settings.STATIC_URL,
-        "url_unica": url_unica
+        "url_unica": url_unica,
+        "web_url": settings.WEB_URL
     };
     return render(req, 'concursos/index.html', context)
 
@@ -49,7 +50,8 @@ def get_concursos(request):
 
     context = {
         "search_text": q,
-        "mis_concursos": concursos
+        "mis_concursos": concursos,
+        "web_url": settings.WEB_URL
     };
 
     #return render(request, 'balance/cds.html', context)
@@ -105,9 +107,10 @@ def get_concurso(request):
         "search_text": q,
         "mis_concursos": concursos,
         "nombre_concurso": nombre_concurso,
-        "videos": videos
+        "videos": videos,
+        "web_url": settings.WEB_URL
     };
-
+    
     if int(tipo_peticion) == 1:
         return  render_to_response("concursos/view_id_concurso__html_snippet.txt",
                                    context)
@@ -177,7 +180,7 @@ def crear_concurso(request):
         errors.append('El concurso se ha creado correctamente.')
 
     url_unica = crear_url_automatica()
-    return render(request, 'concursos/index.html', {'creacion_exitosa': errors, "url_unica": url_unica})
+    return render(request, 'concursos/index.html', {'creacion_exitosa': errors, "url_unica": url_unica, "web_url": settings.WEB_URL})
 
 
 @login_required
@@ -235,7 +238,7 @@ def editar_concurso(request):
                 errors.append('No ha sido posible actualizar el concurso.')
 
     url_unica = crear_url_automatica()
-    return render(request, 'concursos/index.html', {'edicion_exitosa': errors, "url_unica": url_unica})
+    return render(request, 'concursos/index.html', {'edicion_exitosa': errors, "url_unica": url_unica, "web_url": settings.WEB_URL})
 
 
 @login_required
@@ -261,12 +264,12 @@ def eliminar_concurso(request):
             # Verify variable context
             url_unica = crear_url_automatica()
             errors.append('No ha sido posible eliminar el concurso.')
-            return render(request, 'concursos/index.html', {'msj_delete': errors, "url_unica": url_unica})
+            return render(request, 'concursos/index.html', {'msj_delete': errors, "url_unica": url_unica, "web_url": settings.WEB_URL})
         else:
             url_unica = crear_url_automatica()
             errors.append('El concurso ha sido eliminado exitosamente.')
-            return render(request, 'concursos/index.html', {'msj_delete': errors, "url_unica": url_unica})
+            return render(request, 'concursos/index.html', {'msj_delete': errors, "url_unica": url_unica, "web_url": settings.WEB_URL})
     else:
         url_unica = crear_url_automatica()
-        return render(request, 'concursos/index.html', {"url_unica": url_unica})
+        return render(request, 'concursos/index.html', {"url_unica": url_unica, "web_url": settings.WEB_URL})
 
