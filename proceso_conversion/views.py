@@ -135,7 +135,7 @@ def convertir_video(video):
 def get_file_converted_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = "%s.%s" % (uuid.uuid4(), 'mp4')
-    makedirs(os.path.join('videos', str(instance.concurso.id), 'convertidos'))
+    makedirs(os.path.join(settings.MEDIA_ROOT, 'videos', str(instance.concurso.id), 'convertidos'))
     return os.path.join('videos', str(instance.concurso.id), 'convertidos', filename)
 
 
@@ -144,8 +144,6 @@ def makedirs(path):
         os.makedirs(path)
     except OSError as e:
         if e.errno == 17:
-            print("Path:" +path)
-            print(e)
             # Dir already exists. No biggie.
             pass
 
