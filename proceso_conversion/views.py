@@ -144,6 +144,8 @@ def makedirs(path):
         os.makedirs(path)
     except OSError as e:
         if e.errno == 17:
+            print("Path:" +path)
+            print(e)
             # Dir already exists. No biggie.
             pass
 
