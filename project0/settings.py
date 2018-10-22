@@ -74,31 +74,28 @@ WSGI_APPLICATION = 'project0.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASE_USER = os.environ.get("CLOUDG7_DB_USER", '')
-DATABASE_PASSWORD = os.environ.get("CLOUDG7_DB_PASSWORD", '')
-DATABASE_HOST = os.environ.get("CLOUDG7_DB_HOST", '')
+# DATABASE_USER = os.environ.get("CLOUDG7_DB_USER", '')
+# DATABASE_PASSWORD = os.environ.get("CLOUDG7_DB_PASSWORD", '')
+# DATABASE_HOST = os.environ.get("CLOUDG7_DB_HOST", '')
 DATABASES = {
     # Connect to my Home Database
+    'default': {
+        'NAME': 'cloud',
+        'ENGINE': 'django.db.backends.postgresql',        
+        'USER': 'postgres',
+        'PASSWORD': '14827',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+    # Connect to my AWS RDS POSTGRES Database
     # 'default': {
     #     'NAME': 'cloud',
     #     'ENGINE': 'django.db.backends.postgresql',
-    #     'OPTIONS' : {
-    #             'options': '-c search_path=project0'
-    #         },
-    #     'USER': 'postgres',
-    #     'PASSWORD': '14827',
-    #     'HOST': 'localhost',
-    #     'PORT': '5434',
+    #     'USER': DATABASE_USER,
+    #     'PASSWORD': DATABASE_PASSWORD,
+    #     'HOST': DATABASE_HOST,
+    #     'PORT': '5432',
     # }
-    # Connect to my AWS RDS POSTGRES Database
-    'default': {
-        'NAME': 'cloud',
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': DATABASE_USER,
-        'PASSWORD': DATABASE_PASSWORD,
-        'HOST': DATABASE_HOST,
-        'PORT': '5432',
-    }
 
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
