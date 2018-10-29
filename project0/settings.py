@@ -91,19 +91,19 @@ DATABASES = {
     #     'PORT': '5434',
     # }
     # Connect to my AWS RDS POSTGRES Database
+    #'default': {
+    #    'NAME': 'cloud',
+    #    'ENGINE': 'django.db.backends.postgresql',
+    #    'USER': DATABASE_USER,
+    #    'PASSWORD': DATABASE_PASSWORD,
+    #    'HOST': DATABASE_HOST,
+    #    'PORT': '5432',
+    #}
     'default': {
-        'NAME': 'cloud',
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': DATABASE_USER,
-        'PASSWORD': DATABASE_PASSWORD,
-        'HOST': DATABASE_HOST,
-        'PORT': '5432',
+        'ENGINE': 'djongo',
+        'NAME': DATABASE_USER,
+        'HOST': DATABASE_HOST
     }
-
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': 'mydatabase',
-    # }
 }
 
 # Password validation

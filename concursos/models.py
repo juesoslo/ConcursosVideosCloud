@@ -1,5 +1,5 @@
 from enum import Enum
-from django.db import models
+from djongo import models
 import uuid
 import os
 

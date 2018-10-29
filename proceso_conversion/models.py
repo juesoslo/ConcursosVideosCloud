@@ -1,4 +1,4 @@
-from django.db import models
+from djongo import models
 from concursos.models import VideoRelacionado
 
 # Create your models here.
