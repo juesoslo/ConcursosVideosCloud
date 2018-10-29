@@ -166,3 +166,17 @@ EMAIL_USE_TLS = True
 
 #URL final del aplicativo
 WEB_URL = os.environ.get("CLOUDG7_WEB_URL", '')
+
+# configuracion de cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': [
+            'cloudg7-memcached.jdw0m7.0001.use2.cache.amazonaws.com:11211'
+        ]
+    }
+}
+
+# Descomentar para permitir conexiones de sesion a cache
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+
