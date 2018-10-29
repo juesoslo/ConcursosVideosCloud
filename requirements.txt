@@ -7,3 +7,4 @@ Pillow
 requests
 psycopg2
 boto3
+djongo
