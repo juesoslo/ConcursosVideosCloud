@@ -9,3 +9,4 @@ psycopg2
 boto3
 celery
 python-memcached
+pycurl
