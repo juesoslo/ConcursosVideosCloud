@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:400,700%7CMontserrat:300,400,600,700">
 
 		<link rel="stylesheet" href="{% static 'vendors/icons/fontawesome/css/fontawesome-all.min.css' %}"><!-- FontAwesome Icons -->
-		<link rel="stylesheet" href="{% static 'vendors/icons/Iconsmind__Ultimate_Pack/Line%20icons/styles.min.css' %}"><!-- iconsmind.com Icons -->
+		<link rel="stylesheet" href="{% static 'vendors/icons/Iconsmind__Ultimate_Pack/Line icons/styles.min.css' %}"><!-- iconsmind.com Icons -->
 
 		{% block head %}
 
@@ -24,7 +24,7 @@
 		<header id="masthead-pro">
 			<div class="container">
 
-				<h1><a href="/"><img src="/static/images/logo.png" alt="Logo"></a></h1>
+				<h1><a href="/"><img src="{% static 'images/logo.png' %}" alt="Logo"></a></h1>
 
 				{% block top_menu %}
 				<nav id="site-navigation-pro">
@@ -44,7 +44,7 @@
 				{% if user.is_authenticated %}
 					<div id="header-user-profile">
 						<div id="header-user-profile-click" class="noselect">
-							<img src="/static/images/faces/user.png" alt="{{ user.first_name }}">
+							<img src="{% static 'images/faces/user.png' %}" alt="{{ user.first_name }}">
 							<div id="header-username">{{ user.first_name }} {{ user.last_name}} ({{ user.username }}) </div><i class="fas fa-angle-down"></i>
 						</div><!-- close #header-user-profile-click -->
 						<div id="header-user-profile-menu">

@@ -1,5 +1,5 @@
 {% extends 'eventos/base_landing.html' %}
-
+{% load staticfiles %}
 {% block head %}
 
 <title>Smart Tools - Inicio</title>
@@ -13,7 +13,7 @@
 		<div class="flexslider progression-studios-slider">
 	      <ul class="slides">
 				<li class="progression_studios_animate_in">
-					<div class="progression-studios-slider-image-background" style="background-image:url(/static/images/demo/slide-1.jpg);">
+					<div class="progression-studios-slider-image-background" style="background-image:url({% static 'images/demo/slide-1.jpg' %});">
 						<div class="progression-studios-slider-display-table">
 							<div class="progression-studios-slider-vertical-align">
 
@@ -36,7 +36,7 @@
 					</div><!-- close .progression-studios-slider-image-background -->
 				</li>
 				<li class="progression_studios_animate_right">
-					<div class="progression-studios-slider-image-background" style="background-image:url(/static/images/demo/slide-2.jpg); background-color:#111015;">
+					<div class="progression-studios-slider-image-background" style="background-image:url({% static 'images/demo/slide-2.jpg' %}); background-color:#111015;">
 						<div class="progression-studios-slider-display-table">
 							<div class="progression-studios-slider-vertical-align">
 
@@ -58,7 +58,7 @@
 					</div><!-- close .progression-studios-slider-image-background -->
 				</li>
 				<li class="progression_studios_animate_left">
-					<div class="progression-studios-slider-image-background" style="background-image:url(/static/images/demo/slide-3.jpg);">
+					<div class="progression-studios-slider-image-background" style="background-image:url({% static 'images/demo/slide-3.jpg' %});">
 						<div class="progression-studios-slider-display-table">
 							<div class="progression-studios-slider-vertical-align">
 
@@ -90,7 +90,7 @@
 
 				<div class="row">
 					<div class="col-md my-auto"><!-- .my-auto vertically centers contents -->
-						<img src="/static/images/demo/home-1.jpg" class="img-fluid" alt="Watch in Any Devices">
+						<img src="{% static 'images/demo/home-1.jpg' %}" class="img-fluid" alt="Watch in Any Devices">
 					</div>
 					<div class="col-md my-auto"><!-- .my-auto vertically centers contents -->
 	  				<h2 class="short-border-bottom">Crea tu Concurso</h2>
@@ -109,14 +109,14 @@
 						<p><a class="btn btn-green-pro" href="/precios" role="button">Hazlo ahora!</a></p>
 					</div>
 					<div class="col-md my-auto"><!-- .my-auto vertically centers contents -->
-						<img src="/static/images/demo/home-2.jpg" class="img-fluid" alt="Make Your Own Playlist">
+						<img src="{% static 'images/demo/home-2.jpg' %}" class="img-fluid" alt="Make Your Own Playlist">
 					</div>
 				</div><!-- close .row -->
 
 
 				<div class="row">
 					<div class="col-md my-auto"><!-- .my-auto vertically centers contents -->
-						<img src="/static/images/demo/home-3.jpg" class="img-fluid" alt="Watch in Ultra HD">
+						<img src="{% static 'images/demo/home-3.jpg' %}" class="img-fluid" alt="Watch in Ultra HD">
 					</div>
 					<div class="col-md my-auto"><!-- .my-auto vertically centers contents -->
 	  					<h2 class="short-border-bottom">Revisa y Califica</h2>

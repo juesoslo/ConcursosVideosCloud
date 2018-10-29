@@ -10,6 +10,7 @@ import shutil
 from django.conf import settings
 import datetime
 from django.utils.dateparse import parse_date
+import boto3
 
 def crear_url_automatica( ):
     maximo_intentos = 10
@@ -110,7 +111,7 @@ def get_concurso(request):
         "videos": videos,
         "web_url": settings.WEB_URL
     };
-    
+
     if int(tipo_peticion) == 1:
         return  render_to_response("concursos/view_id_concurso__html_snippet.txt",
                                    context)
@@ -142,6 +143,7 @@ def crear_concurso(request):
         banner = ''
         for f in request.FILES.getlist('banner'):
             banner = f
+        #push_picture_to_s3(banner)
 
         username = request.POST.get('username_create', '')
         nombre = request.POST.get('nombre', '')
@@ -273,3 +275,19 @@ def eliminar_concurso(request):
         url_unica = crear_url_automatica()
         return render(request, 'concursos/index.html', {"url_unica": url_unica, "web_url": settings.WEB_URL})
 
+def push_picture_to_s3(file):
+    name_bucket = 'videos-bucket.smarttools'
+    name_folder = 'banners'
+
+    # Create an S3 client
+    s3 = boto3.client('s3')
+
+    #Upload original video into folder id_video
+    filename = file.name
+    bucket_name = name_bucket
+
+    pathname_original = name_folder + filename
+
+    print("Filename: " + filename)
+    response = s3.upload_file(filename, bucket_name, pathname_original)
+    print("Upload video original: %s" % response)

@@ -219,9 +219,9 @@
 
 {% block javascripts %}
   <!-- jQuery -->
-  <script src="/static/vendors/jquery/jquery-3.3.1.min.js"></script>
+  <script src="{% static 'vendors/jquery/jquery-3.3.1.min.js' %}"></script>
   <!-- jQuery UI -->
-  <script src="/static/vendors/jquery-ui/jquery-ui-1.12.1.min.js"></script>
+  <script src="{% static 'vendors/jquery-ui/jquery-ui-1.12.1.min.js' %}"></script>
 
   <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 
@@ -243,9 +243,9 @@
   <script src="{% static 'app-assets/js/scripts/tables/datatables/datatable-basic.js' %}" type="text/javascript"></script>
   <script src="{% static 'app-assets/js/scripts/modal/components-modal.min.js' %}" type="text/javascript"></script>
 
-  <script src="/static/ajax/mis_eventos_ajax_search.js"></script>
-  <script src="/static/ajax/search_event_ajax_search.js"></script>
-  <script src="/static/ajax/eventos_ajax_main.js"></script>
+  <script src="{% static 'ajax/mis_eventos_ajax_search.js' %}"></script>
+  <script src="{% static 'ajax/search_event_ajax_search.js' %}"></script>
+  <script src="{% static 'ajax/eventos_ajax_main.js' %}"></script>
 
   <script>
 
