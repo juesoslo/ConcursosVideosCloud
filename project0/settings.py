@@ -189,3 +189,34 @@ STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 DEFAULT_FILE_STORAGE = 'project0.storage_backends.MediaStorage'
 
 AWS_S3_CUSTOM_DOMAIN = os.environ.get("CLOUDG7_S3_CLOUD_FRONT", '')
+
+# configuracion de cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': [
+            'cloudg7-memcached.jdw0m7.0001.use2.cache.amazonaws.com:11211'
+        ]
+    }
+}
+
+# Descomentar para permitir conexiones de sesion a cache
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+
+# celery
+# Celery
+
+# AWS Credentials
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', "")
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', "")
+
+BROKER_URL = "sqs://%s:%s@" % (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_DEFAULT_QUEUE = 'cloudg7-videos-queue'
+# CELERY_RESULT_BACKEND = None # Disabling the results backend
+BROKER_TRANSPORT_OPTIONS = {
+    'region': 'us-west-2',
+    'polling_interval': 20,
+}
