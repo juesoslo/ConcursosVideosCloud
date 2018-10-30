@@ -5,8 +5,8 @@ import os
 
 
 AWS_REGION = "us-east-2"
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", 'AKIAJAGAZNIQCXEFY2NQ')
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", '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')
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", '')
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", '')
 
 # Create SQS client
 sqs = boto3.client(
@@ -33,28 +33,30 @@ response = sqs.receive_message(
     WaitTimeSeconds=0
 )
 print(response)
-message = response['Messages'][0]
-receipt_handle = message['ReceiptHandle']
 
-# se ejecutan las acciones de procesar video
+if('Messages' in response):
+    message = response['Messages'][0]
+    receipt_handle = message['ReceiptHandle']
 
-# URL final del aplicativo
-WEB_URL = os.environ.get("CLOUDG7_WEB_URL", '')
+    # se ejecutan las acciones de procesar video
 
-# URL del servicio REST que se va a ejecutar
-url = WEB_URL+'/conversion/procesar/'
+    # URL final del aplicativo
+    WEB_URL = os.environ.get("CLOUDG7_WEB_URL", '')
 
-# Se ejecuta el servicio
-response = requests.get(url) #, json=data)
+    # URL del servicio REST que se va a ejecutar
+    url = WEB_URL+'/conversion/procesar/'
 
-# Se imprime el resultado
-print(response.json())
+    # Se ejecuta el servicio
+    response = requests.get(url) #, json=data)
 
-# Delete received message from queue
-sqs.delete_message(
-    QueueUrl=queue_url,
-    ReceiptHandle=receipt_handle
-)
+    # Se imprime el resultado
+    print(response.json())
 
-print('Received and deleted message: %s' % message)
-print("The time is %s :" % str(datetime.now()))
+    # Delete received message from queue
+    sqs.delete_message(
+        QueueUrl=queue_url,
+        ReceiptHandle=receipt_handle
+    )
+
+    print('Received and deleted message: %s' % message)
+    print("The time is %s :" % str(datetime.now()))
