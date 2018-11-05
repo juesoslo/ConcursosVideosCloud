@@ -6,7 +6,7 @@ import os
 # Create your models here
 class Concurso(models.Model):
     nombre = models.CharField(max_length=255)  # el nombre del concurso
-    banner = models.ImageField(upload_to='banners/', null=True)  # el banner o imagen del concurso
+    banner = models.FileField(upload_to='banners/', null=True)  # el banner o imagen del concurso
     url = models.CharField(max_length=255)  # la URL única a todo el sistema
     fec_inicio = models.DateField()  # la  fecha  de  inicio  del  concurso
     fec_fin = models.DateField()  # la  fecha  de  fin  del concurso

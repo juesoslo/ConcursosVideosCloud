@@ -1,41 +1,40 @@
 import requests
 from datetime import datetime
-from celery import shared_task
 import boto3
 import os
 
-@shared_task
-def process_message():
 
-    AWS_REGION = "us-east-2"
-    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", '')
-    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", '')
+AWS_REGION = "us-east-2"
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", '')
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", '')
 
-    # Create SQS client
-    sqs = boto3.client(
-        'sqs',
-        region_name=AWS_REGION,
-        # Hard coded strings as credentials, not recommended.
-        aws_access_key_id=AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=AWS_SECRET_ACCESS_KEY
-    )
+# Create SQS client
+sqs = boto3.client(
+    'sqs',
+    region_name=AWS_REGION,
+    # Hard coded strings as credentials, not recommended.
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+)
 
-    queue_url = 'https://sqs.us-east-2.amazonaws.com/687383508727/cloudg7-videos-queue'
+queue_url = 'https://sqs.us-east-2.amazonaws.com/687383508727/cloudg7-videos-queue'
 
-    # Receive message from SQS queue
-    response = sqs.receive_message(
-        QueueUrl=queue_url,
-        AttributeNames=[
-            'SentTimestamp'
-        ],
-        MaxNumberOfMessages=1,
-        MessageAttributeNames=[
-            'All'
-        ],
-        VisibilityTimeout=0,
-        WaitTimeSeconds=0
-    )
+# Receive message from SQS queue
+response = sqs.receive_message(
+    QueueUrl=queue_url,
+    AttributeNames=[
+        'SentTimestamp'
+    ],
+    MaxNumberOfMessages=1,
+    MessageAttributeNames=[
+        'All'
+    ],
+    VisibilityTimeout=0,
+    WaitTimeSeconds=0
+)
+print(response)
 
+if('Messages' in response):
     message = response['Messages'][0]
     receipt_handle = message['ReceiptHandle']
 
@@ -61,5 +60,3 @@ def process_message():
 
     print('Received and deleted message: %s' % message)
     print("The time is %s :" % str(datetime.now()))
-
-    return True
