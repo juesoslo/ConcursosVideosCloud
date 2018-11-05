@@ -75,9 +75,9 @@ WSGI_APPLICATION = 'project0.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASE_USER = os.environ.get("CLOUDG7_DB_USER", '')
-DATABASE_PASSWORD = os.environ.get("CLOUDG7_DB_PASSWORD", '')
-DATABASE_HOST = os.environ.get("CLOUDG7_DB_HOST", '')
+#DATABASE_PASSWORD = os.environ.get("CLOUDG7_DB_PASSWORD", '')
+DATABASE_USER = os.environ.get("MONGODB_USER", '')
+DATABASE_HOST = os.environ.get("MONGODB_URI", '')
 DATABASES = {
     # Connect to my Home Database
     # 'default': {
@@ -173,9 +173,9 @@ WEB_URL = os.environ.get("CLOUDG7_WEB_URL", '')
 #
 # ]
 
-AWS_ACCESS_KEY_ID = os.environ.get("CLOUDG7_S3_USER", '')
-AWS_SECRET_ACCESS_KEY = os.environ.get("CLOUDG7_S3_KEY", '')
-AWS_STORAGE_BUCKET_NAME = os.environ.get("CLOUDG7_S3_BUCKET", '')
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", '')
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY_ID", '')
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME", '')
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 AWS_S3_OBJECT_PARAMETERS = {
