@@ -215,3 +215,8 @@ BROKER_TRANSPORT_OPTIONS = {
     'region': 'us-west-2',
     'polling_interval': 20,
 }
+
+
+# estas lineas deben estar al final
+import django_heroku
+django_heroku.settings(locals())
