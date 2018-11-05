@@ -12,3 +12,4 @@ celery
 python-memcached
 pycurl
 gunicorn
+pylibmc==1.5.2

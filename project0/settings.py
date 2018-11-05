@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'project0.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-#DATABASE_PASSWORD = os.environ.get("CLOUDG7_DB_PASSWORD", '')
+# DATABASE_PASSWORD = os.environ.get("CLOUDG7_DB_PASSWORD", '')
 DATABASE_USER = os.environ.get("MONGODB_USER", '')
 DATABASE_HOST = os.environ.get("MONGODB_URI", '')
 DATABASES = {
@@ -89,14 +89,14 @@ DATABASES = {
     #     'PORT': '5432',
     # }
     # Connect to my AWS RDS POSTGRES Database
-    #'default': {
+    # 'default': {
     #    'NAME': 'cloud',
     #    'ENGINE': 'django.db.backends.postgresql',
     #    'USER': DATABASE_USER,
     #    'PASSWORD': DATABASE_PASSWORD,
     #    'HOST': DATABASE_HOST,
     #    'PORT': '5432',
-    #}
+    # }
     'default': {
         'ENGINE': 'djongo',
         'NAME': DATABASE_USER,
@@ -154,7 +154,7 @@ EMAIL_HOST_PASSWORD = os.environ.get("CLOUDG7_EMAIL_PASS", '')
 EMAIL_PORT = 25
 EMAIL_USE_TLS = True
 
-#URL final del aplicativo
+# URL final del aplicativo
 WEB_URL = os.environ.get("CLOUDG7_WEB_URL", '')
 
 # AWS Credentials
@@ -164,7 +164,7 @@ AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", '')
 
 # AWS storage configuration
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME", '')
-AWS_S3_CUSTOM_DOMAIN =  os.environ.get("CLOUDG7_S3_CLOUD_FRONT", '')
+AWS_S3_CUSTOM_DOMAIN = os.environ.get("CLOUDG7_S3_CLOUD_FRONT", '')
 
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
@@ -180,18 +180,46 @@ STATIC_ROOT = '/%s/' % STATICFILES_LOCATION
 STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 STATICFILES_STORAGE = 'project0.storages.StaticStorage'
 
+MEMCACHIER_SERVERS = os.environ.get("MEMCACHIER_SERVERS", '')
+MEMCACHIER_USERNAME = os.environ.get("MEMCACHIER_USERNAME", '')
+MEMCACHIER_PASSWORD = os.environ.get("MEMCACHIER_PASSWORD", '')
+
 # configuracion de cache
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': [
-            'cloudg7-memcached.jdw0m7.0001.use2.cache.amazonaws.com:11211'
-        ]
+        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+        # TIMEOUT is not the connection timeout! It's the default expiration
+        # timeout that should be applied to keys! Setting it to `None`
+        # disables expiration.
+        'TIMEOUT': None,
+        'LOCATION': MEMCACHIER_SERVERS,
+        'OPTIONS': {
+            'binary': True,
+            'username': MEMCACHIER_USERNAME,
+            'password': MEMCACHIER_PASSWORD,
+            'behaviors': {
+                # Enable faster IO
+                'no_block': True,
+                'tcp_nodelay': True,
+                # Keep connection alive
+                'tcp_keepalive': True,
+                # Timeout settings
+                'connect_timeout': 2000,  # ms
+                'send_timeout': 750 * 1000,  # us
+                'receive_timeout': 750 * 1000,  # us
+                '_poll_timeout': 2000,  # ms
+                # Better failover
+                'ketama': True,
+                'remove_failed': 1,
+                'retry_timeout': 2,
+                'dead_timeout': 30,
+            }
+        }
     }
 }
 
 # Descomentar para permitir conexiones de sesion a cache
-# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 # Celery
 BROKER_URL = "sqs://%s:%s@" % (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
@@ -199,7 +227,7 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_DEFAULT_QUEUE = 'cloudg7-videos-queue'
-CELERY_RESULT_BACKEND = None # Disabling the results backend
+CELERY_RESULT_BACKEND = None  # Disabling the results backend
 BROKER_TRANSPORT_OPTIONS = {
     'region': 'us-west-2',
     'polling_interval': 20,
