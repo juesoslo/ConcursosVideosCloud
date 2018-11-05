@@ -1,4 +1,4 @@
-Django==2.1.2
+Django==2.1.3
 django-registration
 django-registration-redux
 django-tools
@@ -6,6 +6,7 @@ djangorestframework
 Pillow
 requests
 psycopg2
+django-storages
 boto3
 djongo
 celery
