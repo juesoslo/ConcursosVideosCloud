@@ -5,7 +5,6 @@ django-tools
 djangorestframework
 Pillow
 requests
-psycopg2
 django-storages
 boto3
 djongo
