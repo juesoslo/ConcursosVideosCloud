@@ -138,23 +138,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-# STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'eventos/static'),
-    os.path.join(BASE_DIR, 'concursos/static'),
     os.path.join(BASE_DIR, 'plataforma_concurso/static'),
     os.path.join(BASE_DIR, 'proceso_conversion/static'),
-    os.path.join(BASE_DIR, 'project0/static'),
 )
 
 # Sessions
 SESSION_COOKIE_AGE = 3600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-MEDIA_ROOT = os.environ.get("MEDIA_ROOT_FOLDER", os.path.join(BASE_DIR, ''))
-MEDIA_URL = '/media/'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'organicocooperativa@gmail.com'
@@ -165,32 +157,28 @@ EMAIL_USE_TLS = True
 #URL final del aplicativo
 WEB_URL = os.environ.get("CLOUDG7_WEB_URL", '')
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'project0/static'),
-#
-# ]
-
 # AWS Credentials
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", '')
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", '')
-AWS_DEFAULT_REGION = os.environ.get("AWS_DEFAULT_REGION", '')
+# AWS_S3_REGION_NAME = os.environ.get("AWS_DEFAULT_REGION", '')
 
 # AWS storage configuration
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME", '')
-# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_CUSTOM_DOMAIN = os.environ.get("CLOUDG7_S3_CLOUD_FRONT", '')
+AWS_S3_CUSTOM_DOMAIN =  os.environ.get("CLOUDG7_S3_CLOUD_FRONT", '')
 
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 
-DEFAULT_FILE_STORAGE = 'project0.storage_backends.MediaStorage'
+MEDIAFILES_LOCATION = 'media'
+MEDIA_ROOT = '/%s/' % MEDIAFILES_LOCATION
+MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'project0.storages.MediaStorage'
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_RELATIVE_LOCATION = 'static'
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATIC_RELATIVE_LOCATION)
+STATICFILES_LOCATION = 'static'
+STATIC_ROOT = '/%s/' % STATICFILES_LOCATION
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+STATICFILES_STORAGE = 'project0.storages.StaticStorage'
 
 # configuracion de cache
 CACHES = {
@@ -216,8 +204,3 @@ BROKER_TRANSPORT_OPTIONS = {
     'region': 'us-west-2',
     'polling_interval': 20,
 }
-
-
-# estas lineas deben estar al final
-import django_heroku
-django_heroku.settings(locals())

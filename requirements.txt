@@ -12,4 +12,3 @@ celery
 python-memcached
 pycurl
 gunicorn
-django-heroku
