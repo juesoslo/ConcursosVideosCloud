@@ -175,6 +175,7 @@ WEB_URL = os.environ.get("CLOUDG7_WEB_URL", '')
 # AWS Credentials
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", '')
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY_ID", '')
+AWS_DEFAULT_REGION = os.environ.get("AWS_DEFAULT_REGION", '')
 
 # AWS storage configuration
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME", '')
