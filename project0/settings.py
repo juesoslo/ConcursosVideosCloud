@@ -225,7 +225,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 BROKER_URL = "sqs://%s:%s@" % (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
 BROKER_TRANSPORT_OPTIONS = {
     'region': 'us-east-1',
-    # 'visibility_timeout': 60,  # 1 minutes
+    'visibility_timeout': 60,  # 1 minutes
     'polling_interval': 5,  # 5 seconds
 }
 
