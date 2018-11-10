@@ -287,7 +287,7 @@ def enviarCorreo(video, estadoConversion):
                     """
                     El proceso de conversion de su video ha terminado con estado: {0}. {1}
                     Concurso: {2}
-                    Url de Acceso: {4}/concurso/{3}
+                    Url de Acceso: {4}/platform/{3}
                     """.format(estadoConversion, mensaje, participante.participante.concurso.nombre,
                                participante.participante.concurso.url, settings.WEB_URL),
                     'Smartools.com <no-reply@smartools.com>',
