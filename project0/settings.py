@@ -229,6 +229,6 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_DEFAULT_QUEUE = 'cloudg7-videos-queue'
 CELERY_RESULT_BACKEND = None  # Disabling the results backend
 BROKER_TRANSPORT_OPTIONS = {
-    'region': 'us-west-2',
+    'region': 'us-west-1',
     'polling_interval': 20,
 }

@@ -3,15 +3,9 @@ import os
 from celery import Celery
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project0.settings')
-app = Celery('django_sqs_example')
+app = Celery('project0')
 app.config_from_object('django.conf:settings')
 app.autodiscover_tasks()
-app.conf.beat_schedule = {
-    'display_time-30-seconds': {
-        'task': 'proceso_conversion.tasks.display_time',
-        'schedule': 10.0
-    },
-}
 
 @app.task(bind=True)
 def debug_task(self):
