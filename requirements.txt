@@ -14,3 +14,4 @@ pycurl
 gunicorn
 pylibmc==1.5.2
 newrelic
+HireFire

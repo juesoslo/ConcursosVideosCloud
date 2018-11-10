@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'hirefire.contrib.django.middleware.HireFireMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -69,6 +70,9 @@ TEMPLATES = [
         },
     },
 ]
+
+#configuracion de procesos hirefire
+HIREFIRE_PROCS = ['project0.celery.WorkerProc']
 
 WSGI_APPLICATION = 'project0.wsgi.application'
 
