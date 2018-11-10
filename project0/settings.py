@@ -223,12 +223,18 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 # Celery
 BROKER_URL = "sqs://%s:%s@" % (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+BROKER_TRANSPORT_OPTIONS = {
+    'region': 'us-east-1',
+    'visibility_timeout': 60,  # 1 minutes
+    'polling_interval': 5,     # 5 seconds
+}
+
+# CELERY namespaced
+CELERY_BROKER_URL = BROKER_URL
+CELERY_BROKER_TRANSPORT_OPTIONS = BROKER_TRANSPORT_OPTIONS
+CELERY_TASK_DEFAULT_QUEUE = 'cloudg7-videos-queue'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_DEFAULT_QUEUE = 'cloudg7-videos-queue'
 CELERY_RESULT_BACKEND = None  # Disabling the results backend
-BROKER_TRANSPORT_OPTIONS = {
-    'region': 'us-west-1',
-    'polling_interval': 30,
-}
