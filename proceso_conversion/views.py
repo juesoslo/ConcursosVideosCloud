@@ -5,7 +5,7 @@ from django.conf import settings
 from concursos.models import VideoRelacionado, EstadosVideoOpciones, ParticipanteVideo
 from .models import Proceso, LogConversion
 from django.core.mail import send_mail
-from datetime import datetime
+from django.utils import timezone
 import socket
 import subprocess
 import _thread
@@ -50,6 +50,21 @@ def ejecutar_proceso_conversion():
             convertir_video(video)
 
         # Registra el final del procesamiento
+        registrar_fin_proceso()
+
+
+def ejecutar_proceso_conversion_individual(videoId):
+    try:
+        video = VideoRelacionado.objects.get(id=videoId)
+    except VideoRelacionado.DoesNotExist:
+        video = None
+
+    if video is not None:
+        # registra el inicio del procesamiento
+        registrar_inicio_proceso()
+        # convierte el video
+        convertir_video(video)
+        # registra el fin del video
         registrar_fin_proceso()
 
 
@@ -206,14 +221,14 @@ def registrar_inicio_proceso():
     # Si no existe el proceso, lo crea
     if procesos.count() == 0:
         proceso = Proceso(nombre='Conversion', maquina=maquina)
-        proceso.started_at = datetime.now()  # Se asigna inicio de proceso
+        proceso.started_at = timezone.now()  # Se asigna inicio de proceso
         proceso.finished_at = None  # Se borra el final del proceso
         proceso.save()
 
     # si hay procesos corriendo
     for proceso in procesos:
         # Se actualiza el proceso
-        proceso.started_at = datetime.now()  # Se asigna inicio de proceso
+        proceso.started_at = timezone.now()  # Se asigna inicio de proceso
         proceso.finished_at = None  # Se borra el final del proceso
         proceso.save()
 
@@ -228,13 +243,13 @@ def registrar_fin_proceso():
     # Si no existe el proceso, lo crea
     if procesos.count() == 0:
         proceso = Proceso(nombre='Conversion', maquina=maquina)
-        proceso.finished_at = datetime.now()  # Se asigna final del proceso
+        proceso.finished_at = timezone.now()  # Se asigna final del proceso
         proceso.save()
 
     # si hay procesos corriendo
     for proceso in procesos:
         # Se actualiza el proceso
-        proceso.finished_at = datetime.now()  # Se asigna final del proceso
+        proceso.finished_at = timezone.now()  # Se asigna final del proceso
         proceso.save()
 
 
@@ -264,21 +279,26 @@ def enviarCorreo(video, estadoConversion):
             # print('envia el email a '+destinatario+ ' y estado: '+estadoConversion)
             mensaje = ''
             if estadoConversion == EstadosVideoOpciones.DONE.value:
-                mensaje = '. El video ya ha sido publicado en la página del concurso.'
+                mensaje = 'El video ya ha sido publicado en la página del concurso.'
 
             try:
-                # send_mail(
+                send_mail(
+                    'Conversión de video terminada: ' + estadoConversion,
+                    """
+                    El proceso de conversion de su video ha terminado con estado: {0}. {1}
+                    Concurso: {2}
+                    Url de Acceso: {4}/concurso/{3}
+                    """.format(estadoConversion, mensaje, participante.participante.concurso.nombre,
+                               participante.participante.concurso.url, settings.WEB_URL),
+                    'Smartools.com <no-reply@smartools.com>',
+                    [destinatario],
+                    fail_silently=False,
+                )
+                # sendSESEmail(
                 #     'Conversión de video terminada: ' + estadoConversion,
                 #     'El proceso de conversión de su video ha terminado con estado: ' + estadoConversion + mensaje,
-                #     'Smartools.com <no-reply@smartools.com>',
-                #     [destinatario],
-                #     fail_silently=False,
+                #     [destinatario]
                 # )
-                sendSESEmail(
-                    'Conversión de video terminada: ' + estadoConversion,
-                    'El proceso de conversión de su video ha terminado con estado: ' + estadoConversion + mensaje,
-                    [destinatario]
-                )
             except:
                 pass
 
