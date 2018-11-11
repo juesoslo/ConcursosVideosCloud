@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'hirefire.contrib.django.middleware.HireFireMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,14 +71,17 @@ TEMPLATES = [
     },
 ]
 
+#configuracion de procesos hirefire
+HIREFIRE_PROCS = ['project0.celery.WorkerProc']
+
 WSGI_APPLICATION = 'project0.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASE_USER = os.environ.get("CLOUDG7_DB_USER", '')
-DATABASE_PASSWORD = os.environ.get("CLOUDG7_DB_PASSWORD", '')
-DATABASE_HOST = os.environ.get("CLOUDG7_DB_HOST", '')
+# DATABASE_PASSWORD = os.environ.get("CLOUDG7_DB_PASSWORD", '')
+DATABASE_USER = os.environ.get("MONGODB_USER", '')
+DATABASE_HOST = os.environ.get("MONGODB_URI", '')
 DATABASES = {
     # Connect to my Home Database
     # 'default': {
@@ -89,14 +93,14 @@ DATABASES = {
     #     'PORT': '5432',
     # }
     # Connect to my AWS RDS POSTGRES Database
-    #'default': {
+    # 'default': {
     #    'NAME': 'cloud',
     #    'ENGINE': 'django.db.backends.postgresql',
     #    'USER': DATABASE_USER,
     #    'PASSWORD': DATABASE_PASSWORD,
     #    'HOST': DATABASE_HOST,
     #    'PORT': '5432',
-    #}
+    # }
     'default': {
         'ENGINE': 'djongo',
         'NAME': DATABASE_USER,
@@ -138,85 +142,104 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'eventos/static'),
-    os.path.join(BASE_DIR, 'concursos/static'),
     os.path.join(BASE_DIR, 'plataforma_concurso/static'),
     os.path.join(BASE_DIR, 'proceso_conversion/static'),
-    os.path.join(BASE_DIR, 'project0/static'),
 )
 
 # Sessions
 SESSION_COOKIE_AGE = 3600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-MEDIA_ROOT = os.environ.get("MEDIA_ROOT_FOLDER", os.path.join(BASE_DIR, ''))
-MEDIA_URL = '/media/'
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'organicocooperativa@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get("CLOUDG7_EMAIL_PASS", '')
-EMAIL_PORT = 25
+# configuracion de correo
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.environ.get("SENDGRID_USERNAME", '')
+EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_PASSWORD", '')
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-#URL final del aplicativo
+# URL final del aplicativo
 WEB_URL = os.environ.get("CLOUDG7_WEB_URL", '')
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'project0/static'),
-#
-# ]
+# AWS Credentials
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", '')
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", '')
+# AWS_S3_REGION_NAME = os.environ.get("AWS_DEFAULT_REGION", '')
 
-AWS_ACCESS_KEY_ID = os.environ.get("CLOUDG7_S3_USER", '')
-AWS_SECRET_ACCESS_KEY = os.environ.get("CLOUDG7_S3_KEY", '')
-AWS_STORAGE_BUCKET_NAME = os.environ.get("CLOUDG7_S3_BUCKET", '')
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+# AWS storage configuration
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME", '')
+AWS_S3_CUSTOM_DOMAIN = os.environ.get("CLOUDG7_S3_CLOUD_FRONT", '')
 
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 
-AWS_LOCATION = 'static'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+MEDIAFILES_LOCATION = 'media'
+MEDIA_ROOT = '/%s/' % MEDIAFILES_LOCATION
+MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'project0.storages.MediaStorage'
 
-DEFAULT_FILE_STORAGE = 'project0.storage_backends.MediaStorage'
+STATICFILES_LOCATION = 'static'
+STATIC_ROOT = '/%s/' % STATICFILES_LOCATION
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+STATICFILES_STORAGE = 'project0.storages.StaticStorage'
 
-AWS_S3_CUSTOM_DOMAIN = os.environ.get("CLOUDG7_S3_CLOUD_FRONT", '')
+MEMCACHIER_SERVERS = os.environ.get("MEMCACHIER_SERVERS", '')
+MEMCACHIER_USERNAME = os.environ.get("MEMCACHIER_USERNAME", '')
+MEMCACHIER_PASSWORD = os.environ.get("MEMCACHIER_PASSWORD", '')
 
 # configuracion de cache
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': [
-            'cloudg7-memcached.jdw0m7.0001.use2.cache.amazonaws.com:11211'
-        ]
+        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+        # TIMEOUT is not the connection timeout! It's the default expiration
+        # timeout that should be applied to keys! Setting it to `None`
+        # disables expiration.
+        'TIMEOUT': None,
+        'LOCATION': MEMCACHIER_SERVERS,
+        'OPTIONS': {
+            'binary': True,
+            'username': MEMCACHIER_USERNAME,
+            'password': MEMCACHIER_PASSWORD,
+            'behaviors': {
+                # Enable faster IO
+                'no_block': True,
+                'tcp_nodelay': True,
+                # Keep connection alive
+                'tcp_keepalive': True,
+                # Timeout settings
+                'connect_timeout': 2000,  # ms
+                'send_timeout': 750 * 1000,  # us
+                'receive_timeout': 750 * 1000,  # us
+                '_poll_timeout': 2000,  # ms
+                # Better failover
+                'ketama': True,
+                'remove_failed': 1,
+                'retry_timeout': 2,
+                'dead_timeout': 30,
+            }
+        }
     }
 }
 
 # Descomentar para permitir conexiones de sesion a cache
-# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
-# celery
 # Celery
-
-# AWS Credentials
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', "")
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', "")
-
 BROKER_URL = "sqs://%s:%s@" % (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+BROKER_TRANSPORT_OPTIONS = {
+    'region': 'us-east-1',
+    'visibility_timeout': 60,  # 1 minutes
+    'polling_interval': 5,  # 5 seconds
+}
+
+# CELERY namespaced
+CELERY_BROKER_URL = BROKER_URL
+CELERY_BROKER_TRANSPORT_OPTIONS = BROKER_TRANSPORT_OPTIONS
+CELERY_TASK_DEFAULT_QUEUE = 'cloudg7-videos-queue'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_DEFAULT_QUEUE = 'cloudg7-videos-queue'
-CELERY_RESULT_BACKEND = None # Disabling the results backend
-BROKER_TRANSPORT_OPTIONS = {
-    'region': 'us-west-2',
-    'polling_interval': 20,
-}
+CELERY_RESULT_BACKEND = None  # Disabling the results backend

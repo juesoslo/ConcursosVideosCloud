@@ -8,11 +8,12 @@
 
     <link rel="stylesheet" href='{% static "plataforma_concurso/css/bootstrap.min.css" %}'>
     <link rel="stylesheet" href='{% static "plataforma_concurso/css/style_skrn.css" %}'>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:400,700%7CMontserrat:300,400,600,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMontserrat:300,400,600,700">
 
     <link rel="stylesheet" href='{% static "plataforma_concurso/icons/fontawesome/css/fontawesome-all.min.css" %}'>
     <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href='{% static  "plataforma_concurso/icons/Iconsmind__Ultimate_Pack/Line%20icons/styles.min.css" %}'>
+    <link rel="stylesheet"
+          href='{% static "plataforma_concurso/icons/Iconsmind__Ultimate_Pack/Line icons/styles.min.css" %}'>
     <!-- iconsmind.com Icons -->
 
     <title>SmartTools - Concurso</title>
@@ -33,11 +34,11 @@
 
         {% block toppage %}
 
-        <div class="text-center mx-auto box h-100 d-flex justify-content-center flex-column">
-          {% for x in concurso %}
-            <h1>{{ x.nombre }}</h1>
-            {% endfor %}
-        </div>
+            <div class="text-center mx-auto box h-100 d-flex justify-content-center flex-column">
+                {% for x in concurso %}
+                    <h1>{{ x.nombre }}</h1>
+                {% endfor %}
+            </div>
 
         {% endblock %}
 
@@ -46,24 +47,24 @@
         <nav id="mobile-navigation-pro">
 
             <ul id="mobile-menu-pro">
-              <li class="normal-item-pro {% ifequal request.path my_url %}current-menu-item{% endifequal %}">
-                  <a href="{{ my_url }}">
-                      <span class="icon-Old-TV"></span>
-                      Concurso
-                  </a>
-              </li>
-              <li class="normal-item-pro {% ifequal request.path my_url|add:"videos/" %}current-menu-item{% endifequal %}">
-                  <a href="{{ my_url|add:"videos"}}">
-                      <span class="icon-Movie"></span>
-                      Videos
-                  </a>
-              </li>
-              <li class="normal-item-pro {% ifequal request.path my_url|add:"nuevo/" %}current-menu-item{% endifequal %}">
-                  <a href="{{ my_url|add:"nuevo"}}">
-                      <span class="icon-Upload-2"></span>
-                      Carga tu video
-                  </a>
-              </li>
+                <li class="normal-item-pro {% ifequal request.path my_url %}current-menu-item{% endifequal %}">
+                    <a href="{{ my_url }}">
+                        <span class="icon-Old-TV"></span>
+                        Concurso
+                    </a>
+                </li>
+                <li class="normal-item-pro {% ifequal request.path my_url|add:"videos/" %}current-menu-item{% endifequal %}">
+                    <a href="{{ my_url|add:"videos" }}">
+                        <span class="icon-Movie"></span>
+                        Videos
+                    </a>
+                </li>
+                <li class="normal-item-pro {% ifequal request.path my_url|add:"nuevo/" %}current-menu-item{% endifequal %}">
+                    <a href="{{ my_url|add:"nuevo" }}">
+                        <span class="icon-Upload-2"></span>
+                        Carga tu video
+                    </a>
+                </li>
             </ul>
             <div class="clearfix"></div>
 
@@ -86,13 +87,13 @@
                 </a>
             </li>
             <li class="normal-item-pro {% ifequal request.path my_url|add:"videos/" %}current-menu-item{% endifequal %}">
-                <a href="{{ my_url|add:"videos"}}">
+                <a href="{{ my_url|add:"videos" }}">
                     <span class="icon-Movie"></span>
                     Videos
                 </a>
             </li>
             <li class="normal-item-pro {% ifequal request.path my_url|add:"nuevo/" %}current-menu-item{% endifequal %}">
-                <a href="{{ my_url|add:"nuevo"}}">
+                <a href="{{ my_url|add:"nuevo" }}">
                     <span class="icon-Upload-2"></span>
                     Carga tu video
                 </a>
@@ -115,18 +116,22 @@
 
 <!-- Required Framework JavaScript -->
 <script src='{% static "plataforma_concurso/js/libs/jquery-3.3.1.min.js" %}'></script><!-- jQuery -->
-<script src='{% static "plataforma_concurso/js/libs/popper.min.js" %}' defer></script><!-- Bootstrap Popper/Extras JS -->
+<script src='{% static "plataforma_concurso/js/libs/popper.min.js" %}' defer></script>
+<!-- Bootstrap Popper/Extras JS -->
 <script src='{% static "plataforma_concurso/js/libs/bootstrap.min.js" %}' defer></script><!-- Bootstrap Main JS -->
 <!-- All JavaScript in Footer -->
 
 <!-- Additional Plugins and JavaScript -->
 <script src='{% static "plataforma_concurso/js/navigation.js" %}' defer></script><!-- Header Navigation JS Plugin -->
-<script src='{% static "plataforma_concurso/js/jquery.flexslider-min.js" %}' defer></script><!-- FlexSlider JS Plugin -->
+<script src='{% static "plataforma_concurso/js/jquery.flexslider-min.js" %}' defer></script>
+<!-- FlexSlider JS Plugin -->
 <script src='{% static "plataforma_concurso/js/jquery-asRange.min.js" %}' defer></script><!-- Range Slider JS Plugin -->
-<script src='{% static "plataforma_concurso/js/circle-progress.min.js" %}' defer></script><!-- Circle Progress JS Plugin -->
+<script src='{% static "plataforma_concurso/js/circle-progress.min.js" %}' defer></script>
+<!-- Circle Progress JS Plugin -->
 <script src='{% static "plataforma_concurso/js/afterglow.min.js" %}' defer></script><!-- Video Player JS Plugin -->
 <script src='{% static "plataforma_concurso/js/script.js" %}' defer></script><!-- Custom Document Ready JS -->
-<script src='{% static "plataforma_concurso/js/script-dashboard.js" %}' defer></script><!-- Custom Document Ready for Dashboard Only JS -->
+<script src='{% static "plataforma_concurso/js/script-dashboard.js" %}' defer></script>
+<!-- Custom Document Ready for Dashboard Only JS -->
 <script src='https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js' defer></script>
 {% block scripts %}
 {% endblock %}
