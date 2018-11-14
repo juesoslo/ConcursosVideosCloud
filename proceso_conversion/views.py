@@ -125,7 +125,7 @@ def convertir_video(video):
 
         # Se intenta convertir el video
         convertido = convertir_video_con_aplicacion_externa(os.path.join(settings.MEDIA_URL, video_original),
-                                                            os.path.join(MEDIA_PATH, settings.MEDIA_ROOT, video_convertido))
+                                                            video_convertido)
         if convertido is True:
             registrar_log_conversion(video, 'Se actualiza el estado del video a DONE')
             video.video_convertido = video_convertido  # El video convertido es el mismo video original
@@ -167,6 +167,8 @@ def makedirs(path):
 
 
 def convertir_video_con_aplicacion_externa(video_original, video_convertido):
+    print("Salida del video %s" % video_convertido)
+
     ext = video_original.split('.')[-1]
     if ext == 'mkv':
         return_value = subprocess.call([
