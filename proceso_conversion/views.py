@@ -121,7 +121,7 @@ def convertir_video(video):
         registrar_log_conversion(video, 'El video convertido se va a llamar: ' + video_convertido)
 
         # Se intenta convertir el video
-        convertido = convertir_video_con_aplicacion_externa(os.path.join(settings.MEDIA_ROOT, video_original),
+        convertido = convertir_video_con_aplicacion_externa(os.path.join(settings.MEDIA_URL, video_original),
                                                             os.path.join(settings.MEDIA_ROOT, video_convertido))
         if convertido is True:
             registrar_log_conversion(video, 'Se actualiza el estado del video a DONE')
