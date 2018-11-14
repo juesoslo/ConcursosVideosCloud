@@ -1,3 +1,4 @@
+from django.core.files import File
 from django.http import JsonResponse
 from proceso_conversion.awsses import sendSESEmail
 from .serializers import modeloJSON
@@ -128,7 +129,11 @@ def convertir_video(video):
                                                             video_convertido)
         if convertido is True:
             registrar_log_conversion(video, 'Se actualiza el estado del video a DONE')
-            video.video_convertido = video_convertido  # El video convertido es el mismo video original
+
+            reopen = open(video_convertido, "rb")
+            django_file = File(reopen)
+            video.video_convertido.save(video_convertido, django_file, save=True)
+            #video.video_convertido  = os.path.join(settings.MEDIA_URL, video_convertido)  # El video convertido es el mismo video original
             video.estado = EstadosVideoOpciones.DONE.value  # El estado del video es DONE
             video.save()
 
