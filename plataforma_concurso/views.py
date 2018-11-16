@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseBadRequest
 import json
 from django.core.files.uploadedfile import UploadedFile
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.decorators.csrf import csrf_exempt
+
 from concursos.models import Concurso, VideoRelacionado, Participante, ParticipanteVideo, EstadosVideoOpciones
 from plataforma_concurso.forms import ParticipanteForm
 from proceso_conversion.tasks import processVideo
@@ -41,7 +43,7 @@ def videos(request, idconcurso):
 
     for x in concursos:
         video = ParticipanteVideo.objects.filter(participante_id=x.id)
-        
+
         for vid in video:
             conv = VideoRelacionado.objects.filter(id=vid.video.id, estado=EstadosVideoOpciones.DONE.value)
             for t in conv:
@@ -107,6 +109,7 @@ def formulario_participante(request, idconcurso):
         return render(request, 'error_concurso.html', context)
 
 
+@csrf_exempt
 def video_upload(request):
     if request.method == 'POST':
         if request.FILES == None:
